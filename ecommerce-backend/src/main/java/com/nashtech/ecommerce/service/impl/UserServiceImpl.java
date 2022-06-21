@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.service;
+package com.nashtech.ecommerce.service.impl;
 
 import java.util.List;
 
@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 import com.nashtech.ecommerce.dto.UserDto;
 import com.nashtech.ecommerce.entity.User;
 import com.nashtech.ecommerce.repository.UserRepository;
+import com.nashtech.ecommerce.service.UserService;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 	
 	private UserRepository userRepository;
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
 		super();
 		this.userRepository = userRepository;
 		this.modelMapper = modelMapper;

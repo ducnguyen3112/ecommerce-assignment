@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.restcontroller;
+package com.nashtech.ecommerce.controller.rest;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.nashtech.ecommerce.repository.CartItemRepository;
 
 
 @RestController
-@RequestMapping("/cartItems")
+@RequestMapping("/cart-items")
 public class CartItemController {
 	@Autowired
 	private CartItemRepository cartItemRepository;
