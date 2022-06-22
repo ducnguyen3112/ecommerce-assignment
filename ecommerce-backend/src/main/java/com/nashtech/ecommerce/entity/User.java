@@ -1,12 +1,15 @@
 package com.nashtech.ecommerce.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -39,4 +42,12 @@ public class User {
 	private String avatar;
 	@Column(name = "address")
 	private String address;
+	@OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,
+			CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	private List<Order> orderList;
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private List<Cart> cartList;
+	@OneToMany(mappedBy = "user")
+	List<UserRole> userRoles;
+	
 }

@@ -5,6 +5,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -27,4 +30,12 @@ public class CartItem {
 	private Date createdAt;
 	@Column(name = "modified_at")
 	private Date modifiedAt;
+	@ManyToOne
+	@MapsId("cartId")
+	@JoinColumn(name = "cart_id")
+	private Cart cart;
+	@ManyToOne
+	@MapsId("productId")
+	@JoinColumn(name = "product_id")
+	private Product product;
 }

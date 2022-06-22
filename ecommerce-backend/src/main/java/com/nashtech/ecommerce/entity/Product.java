@@ -1,12 +1,17 @@
 package com.nashtech.ecommerce.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -37,9 +42,14 @@ public class Product {
 	private Date modifiedAt;
 	@Column(name = "status")
 	private int status;
-	@Column(name = "category_id")
-	private Long categoryId;
 	@Column(name = "image")
 	private String image;
+	@OneToMany(mappedBy = "product")
+	List<OrderItem> oderItems;
+	@OneToMany(mappedBy = "product")
+	List<CartItem> cartItems;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "category_id")
+	private Category category;
 	
 }
