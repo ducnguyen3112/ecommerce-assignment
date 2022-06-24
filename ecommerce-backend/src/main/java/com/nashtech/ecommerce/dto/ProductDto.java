@@ -7,21 +7,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class UserDto {
+public class ProductDto {
 	private Long id;
-	private String firstName;
-	private String lastName;
-	private String phoneNum;
-	private String email;
+	private String productName;
+	private String description;
+	private int inventory;
+	private Long price;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date registeredAt;
-	private String avatar;
-	private String address;
+	private Date createdAt;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date modifiedAt;
 	private int status;
+	private String image;
 }

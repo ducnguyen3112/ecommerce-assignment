@@ -6,4 +6,5 @@ import com.nashtech.ecommerce.entity.UserRole;
 import com.nashtech.ecommerce.entity.UserRoleId;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, UserRoleId> {
+	
 }

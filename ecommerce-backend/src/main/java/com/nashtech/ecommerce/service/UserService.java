@@ -5,11 +5,13 @@ import java.util.Map;
 
 import com.nashtech.ecommerce.dto.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.UserDto;
+import com.nashtech.ecommerce.entity.User;
 
 public interface UserService{
 	public List<UserDto> findAllUserDtos();
 	public UserDto findUserDtoById(Long id);
-	public UserDto saveUser(UserDto userDto);
 	UserDto updateUser(Map<Object, Object> fields, Long id);
-	ResponseMessageDto delelteUser(Long id);
+	ResponseMessageDto deleteUser(Long id);
+	UserDto findUserDtoByEmail(String email);
+	UserDto saveUser(User user);
 }

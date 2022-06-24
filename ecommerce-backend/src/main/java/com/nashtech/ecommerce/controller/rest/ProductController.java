@@ -14,37 +14,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nashtech.ecommerce.dto.ProductDto;
 import com.nashtech.ecommerce.dto.ResponseMessageDto;
-import com.nashtech.ecommerce.dto.UserDto;
-import com.nashtech.ecommerce.entity.User;
-import com.nashtech.ecommerce.service.UserService;
-
+import com.nashtech.ecommerce.service.ProductService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/products")
+public class ProductController {
 	@Autowired
-	private UserService userService;
+	private ProductService productService;
 	
 	
 	@GetMapping
-	public List<UserDto> findAllUserDtos() {
-		return userService.findAllUserDtos();
+	public List<ProductDto> findAllProductDtos() {
+		return productService.findAllProductDtos();
 	}
 	@GetMapping("/{id}")
-	public UserDto findUserDtoById(@PathVariable Long id) {
-		return userService.findUserDtoById(id);
+	public ProductDto findProductDtoById(@PathVariable Long id) {
+		return productService.findProductDtoById(id);
 	}
 	@PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UserDto saveUserDto(@RequestBody User user) {
-		return userService.saveUser(user);
+	public ProductDto saveProductDto(@RequestBody ProductDto productDto) {
+		return productService.saveProduct(productDto);
 	}
 	@PatchMapping("/{id}")
-	public UserDto updateUserDto(@RequestBody Map<Object, Object> fields, @PathVariable Long id) {
-		return userService.updateUser(fields, id);
+	public ProductDto updateProductDto(@RequestBody Map<Object, Object> fields, @PathVariable Long id) {
+		return productService.updateProduct(fields, id);
 	}
 	@DeleteMapping("/{id}")
-	public ResponseMessageDto deleteUser(@PathVariable Long id) {
-		return userService.deleteUser(id);
+	public ResponseMessageDto deleteProduct(@PathVariable Long id) {
+		return productService.deleteProduct(id);
 	}
 }

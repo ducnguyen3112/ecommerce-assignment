@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,12 +45,14 @@ public class User {
 	private String avatar;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "status")
+	private int status;
 	@OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,
 			CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	private List<Order> orderList;
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private List<Cart> cartList;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	List<UserRole> userRoles;
 	
 }
