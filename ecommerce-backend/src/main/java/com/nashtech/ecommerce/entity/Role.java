@@ -24,8 +24,10 @@ public class Role {
 	@Column(name = "role_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name = "role_name")
 	private String roleName;
+	
 	@OneToMany(mappedBy = "role")
 	List<UserRole> userRoles;
 }

@@ -17,13 +17,15 @@ import com.nashtech.ecommerce.service.impl.CloudDinaryService;
 
 @Controller
 public class FileUpLoadController {
-	
+
 	@Autowired
 	private CloudDinaryService cloudDinaryService;
-	
+
 	@PostMapping("/cloudinary")
-	public ResponseEntity<ResponseMessageDto> upLoad(@RequestParam("file") MultipartFile multipartFile) throws IOException{
-		Map<?, ?> resultMap=cloudDinaryService.upload(multipartFile);
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessageDto(HttpStatus.OK, resultMap.get("url").toString(),LocalDateTime.now()));
+	public ResponseEntity<ResponseMessageDto> upLoad(@RequestParam("file") MultipartFile multipartFile)
+			throws IOException {
+		Map<?, ?> resultMap = cloudDinaryService.upload(multipartFile);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new ResponseMessageDto(HttpStatus.OK, resultMap.get("url").toString(), LocalDateTime.now()));
 	}
 }

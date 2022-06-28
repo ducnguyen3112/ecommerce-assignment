@@ -13,10 +13,12 @@ public class EcommerceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

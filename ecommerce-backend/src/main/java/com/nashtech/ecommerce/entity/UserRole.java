@@ -17,12 +17,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "user_role")
 public class UserRole {
+	
 	@EmbeddedId
 	private UserRoleId userRoleId;
+	
 	@ManyToOne
 	@MapsId("userId")
 	@JoinColumn(name = "user_id")
 	User user;
+	
 	@ManyToOne
 	@MapsId("roleId")
 	@JoinColumn(name = "role_id")

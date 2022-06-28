@@ -1,7 +1,6 @@
 package com.nashtech.ecommerce.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.nashtech.ecommerce.dto.CategoryDto;
 
@@ -11,8 +10,8 @@ public interface CategoryService {
 
 	CategoryDto findCategoryDtoById(Long id);
 
-	CategoryDto saveCategory(CategoryDto categoryDto);
+	CategoryDto createCategory(CategoryDto categoryDto);
 
-	CategoryDto updateCategory(Map<Object, Object> fields, Long id);
+	CategoryDto updateCategory(CategoryDto categoryDto);
 
 }

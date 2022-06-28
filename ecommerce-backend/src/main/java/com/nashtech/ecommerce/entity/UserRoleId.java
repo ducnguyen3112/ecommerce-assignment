@@ -15,12 +15,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserRoleId implements Serializable {/**
-	 * 
-	 */
+public class UserRoleId implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "user_id")
 	private Long userId;
+	
 	@Column(name = "role_id")
 	private Long roleId;
 
