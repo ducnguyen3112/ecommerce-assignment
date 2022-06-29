@@ -1,42 +1,54 @@
 package com.nashtech.ecommerce.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor;
+import com.nashtech.ecommerce.security.jwt.AuthenticationEntryPointHandler;
+import com.nashtech.ecommerce.security.jwt.AuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
-public class WebSecurityConfig implements WebMvcConfigurer {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig  {
 
-	//private final UserDetailsService userDetailsService;
+	@Autowired
+    private AuthenticationEntryPointHandler unauthorizedHandler;
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-	 @Bean
-	    public PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+	@Bean
+	public AuthenticationFilter authenticationJwtTokenFilter() {
+		return new AuthenticationFilter();
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(
+			AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//		http.authorizeRequests().antMatchers("/login/**").permitAll();
-//		http.authorizeRequests().antMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority("ROLE_USER");
-//		http.authorizeRequests().antMatchers(HttpMethod.POST,"/users/**").hasAnyAuthority("ROLE_ADMIN");
-//		http.authorizeRequests().anyRequest().authenticated();
-		http.authorizeRequests().anyRequest().permitAll();
-//		http.addFilterBefore(new CustomauthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+		http.cors().and().csrf().disable()
+		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .authorizeRequests().antMatchers("/auth/**").permitAll()
+        .anyRequest().authenticated();
+		 http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
-
-	
-
 }

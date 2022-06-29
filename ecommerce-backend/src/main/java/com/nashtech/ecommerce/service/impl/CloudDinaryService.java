@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,11 +18,18 @@ public class CloudDinaryService {
 	
 	Cloudinary cloudinary;
 	private Map<String, String> valueMap = new HashMap<String, String>();
+	
+	@Value("${clouddinary.cloud-name}")
+	private String cloudName;
+	@Value("${clouddinary.api-key}")
+	private String apiKey;
+	@Value("${clouddinary.api-secret}")
+	private String apiSecret;
 
 	public CloudDinaryService() {
-		valueMap.put("cloud_name", "shoesstation");
-		valueMap.put("api_key", "736759188557746");
-		valueMap.put("api_secret", "uq6g5PCiVe7YPaCNUtXa1ED8qkg");
+		valueMap.put("cloud_name", cloudName);
+		valueMap.put("api_key", apiKey);
+		valueMap.put("api_secret", apiSecret);
 		cloudinary = new Cloudinary(valueMap);
 	}
 

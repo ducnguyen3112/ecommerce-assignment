@@ -33,4 +33,5 @@ public class UserDto {
 	private String address;
 	
 	private int status;
+	
 }

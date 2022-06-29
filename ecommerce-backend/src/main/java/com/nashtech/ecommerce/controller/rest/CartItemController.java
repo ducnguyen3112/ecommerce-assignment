@@ -15,7 +15,7 @@ public class CartItemController {
 	@Autowired
 	private CartService cartService;
 
-	@GetMapping("{/id}")
+	@GetMapping("/{id}")
 	public CartDto findCartDtoById(@PathVariable Long id) {
 		return cartService.findCartDtoById(id);
 	}

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.ecommerce.dto.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.SignUpDto;
 import com.nashtech.ecommerce.dto.UserDto;
-import com.nashtech.ecommerce.entity.User;
 import com.nashtech.ecommerce.service.UserService;
 
 @RestController
@@ -35,8 +35,8 @@ public class UserController {
 	}
 
 	@PostMapping
-	public UserDto saveUserDto(@RequestBody User user) {
-		return userService.createUser(user);
+	public UserDto saveUserDto(@RequestBody SignUpDto signUpDto) {
+		return userService.createUser(signUpDto);
 	}
 
 	@PutMapping
@@ -48,4 +48,5 @@ public class UserController {
 	public ResponseMessageDto deleteUser(@PathVariable Long id) {
 		return userService.deleteUser(id);
 	}
+	
 }
