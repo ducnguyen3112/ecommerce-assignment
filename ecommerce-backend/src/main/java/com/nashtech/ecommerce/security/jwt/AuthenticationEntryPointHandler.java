@@ -12,7 +12,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
-import com.nashtech.ecommerce.dto.AccessDeniedResponse;
+import com.nashtech.ecommerce.dto.response.ResponseAccessDenied;
 
 @Component
 public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint {
@@ -22,8 +22,9 @@ public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint
 			AuthenticationException authException) throws IOException, ServletException {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		String accessDeniedResponse = new Gson().toJson(new AccessDeniedResponse(HttpServletResponse.SC_UNAUTHORIZED,
-				"Access denied",authException.getMessage(),new Date()));
+		String accessDeniedResponse = new Gson()
+				.toJson(new ResponseAccessDenied(HttpServletResponse.SC_UNAUTHORIZED,
+						"Access denied", authException.getMessage(), new Date()));
 		response.getWriter().print(accessDeniedResponse);
 
 	}

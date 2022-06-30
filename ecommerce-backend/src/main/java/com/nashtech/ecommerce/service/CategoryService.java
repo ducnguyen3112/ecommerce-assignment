@@ -2,16 +2,17 @@ package com.nashtech.ecommerce.service;
 
 import java.util.List;
 
-import com.nashtech.ecommerce.dto.CategoryDto;
+import com.nashtech.ecommerce.dto.request.RequestCategoryDto;
+import com.nashtech.ecommerce.dto.response.ResponseCategoryDto;
 
 public interface CategoryService {
 
-	List<CategoryDto> findAllCategoryDtos();
+	List<ResponseCategoryDto> findAllCategoryDtos();
 
-	CategoryDto findCategoryDtoById(Long id);
+	ResponseCategoryDto findCategoryDtoById(Long id);
 
-	CategoryDto createCategory(CategoryDto categoryDto);
+	ResponseCategoryDto createCategory(RequestCategoryDto categoryDto);
 
-	CategoryDto updateCategory(CategoryDto categoryDto);
+	ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto);
 
 }

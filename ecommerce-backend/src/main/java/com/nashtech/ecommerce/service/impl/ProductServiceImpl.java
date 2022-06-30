@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.nashtech.ecommerce.dto.ProductDto;
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.request.RequestProductDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.entity.Product;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.ProductRepository;
@@ -32,36 +33,36 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDto> findAllProductDtos() {
+	public List<ResponseProductDto> findAllProductDtos() {
 		List<Product> products = productRepository.findAll();
-		return modelMapper.map(products, new TypeToken<List<ProductDto>>() {
+		return modelMapper.map(products, new TypeToken<List<ResponseProductDto>>() {
 		}.getType());
 	}
 
 	@Override
-	public ProductDto findProductDtoById(Long id) {
+	public ResponseProductDto findProductDtoById(Long id) {
 		Product product = productRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find product with id = " + id));
-		return modelMapper.map(product, ProductDto.class);
+		return modelMapper.map(product, ResponseProductDto.class);
 	}
 
 	@Override
-	public ProductDto createProduct(ProductDto productDto) {
+	public ResponseProductDto createProduct(RequestProductDto productDto) {
 		productDto.setCreatedAt(new Date());
 		productDto.setModifiedAt(new Date());
 		productDto.setStatus(1);
 		Product product = productRepository
 				.save(modelMapper.map(productDto, Product.class));
-		return modelMapper.map(product, ProductDto.class);
+		return modelMapper.map(product, ResponseProductDto.class);
 	}
 
 	@Override
-	public ProductDto updateProduct(ProductDto productDto) {
+	public ResponseProductDto updateProduct(RequestProductDto productDto) {
 		Product product = productRepository.findById(productDto.getId()).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find product has id = " + productDto.getId()));
 		modelMapper.map(productDto,product);
 		product=productRepository.save(product);
-		return modelMapper.map(product, ProductDto.class);
+		return modelMapper.map(product, ResponseProductDto.class);
 	}
 
 	@Override

@@ -4,24 +4,25 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
-import com.nashtech.ecommerce.dto.SignUpDto;
-import com.nashtech.ecommerce.dto.UserDto;
+import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
+import com.nashtech.ecommerce.dto.request.RequestUserDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.security.UserDetailsImpl;
 
 public interface UserService {
 	
-	List<UserDto> findAllUserDtos();
+	List<ResponseUserDto> findAllUserDtos();
 
-	UserDto findUserDtoById(Long id);
+	ResponseUserDto findUserDtoById(Long id);
 
 	ResponseMessageDto deleteUser(Long id);
 
-	UserDto findUserDtoByEmail(String email);
+	ResponseUserDto findUserDtoByEmail(String email);
 
-	UserDto updateUser(UserDto userDto);
+	ResponseUserDto updateUser(RequestUserDto userDto);
 
-	UserDto createUser(SignUpDto signUpDto);
+	ResponseUserDto createUser(RequestSignUpDto signUpDto);
 	
 	public UserDetailsImpl loadUserByUsername(String email) throws UsernameNotFoundException;
 

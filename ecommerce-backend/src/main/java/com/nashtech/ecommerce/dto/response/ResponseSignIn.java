@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.response;
 
 import java.util.Collection;
 
@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SignInResponse {
+public class ResponseSignIn {
 	private String name;
 	private String email;
 	private Collection<? extends GrantedAuthority> roles;

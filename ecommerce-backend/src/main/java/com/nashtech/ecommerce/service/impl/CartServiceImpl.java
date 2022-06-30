@@ -6,7 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nashtech.ecommerce.dto.CartDto;
+import com.nashtech.ecommerce.dto.request.RequestCartDto;
+import com.nashtech.ecommerce.dto.response.ResponseCartDto;
 import com.nashtech.ecommerce.entity.Cart;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.CartRepository;
@@ -26,27 +27,27 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public CartDto findCartDtoById(Long id) {
+	public ResponseCartDto findCartDtoById(Long id) {
 		Cart cart = cartRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find cart with id = " + id));
-		return modelMapper.map(cart, CartDto.class);
+		return modelMapper.map(cart, ResponseCartDto.class);
 	}
 
 	@Override
-	public CartDto createCart(CartDto cartDto) {
+	public ResponseCartDto createCart(RequestCartDto cartDto) {
 		cartDto.setCreatedAt(new Date());
 		cartDto.setModifiedAt(new Date());
 		Cart cart = cartRepository.save(modelMapper.map(cartDto, Cart.class));
-		return modelMapper.map(cart, CartDto.class);
+		return modelMapper.map(cart, ResponseCartDto.class);
 	}
 
 	@Override
-	public CartDto updateCart(CartDto cartDto) {
+	public ResponseCartDto updateCart(RequestCartDto cartDto) {
 		Cart cart = cartRepository.findById(cartDto.getId()).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find cart with id = " + cartDto.getId()));
 		modelMapper.map(cartDto,cart);
 		cart=cartRepository.save(cart);
-		return modelMapper.map(cart, CartDto.class);
+		return modelMapper.map(cart, ResponseCartDto.class);
 	}
 
 }

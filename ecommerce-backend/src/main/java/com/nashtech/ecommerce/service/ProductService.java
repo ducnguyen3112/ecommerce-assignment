@@ -2,19 +2,20 @@ package com.nashtech.ecommerce.service;
 
 import java.util.List;
 
-import com.nashtech.ecommerce.dto.ProductDto;
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.request.RequestProductDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 
 public interface ProductService {
 
-	List<ProductDto> findAllProductDtos();
+	List<ResponseProductDto> findAllProductDtos();
 
-	ProductDto findProductDtoById(Long id);
+	ResponseProductDto findProductDtoById(Long id);
 
 	ResponseMessageDto deleteProduct(Long id);
 
-	ProductDto createProduct(ProductDto productDto);
+	ResponseProductDto createProduct(RequestProductDto productDto);
 
-	ProductDto updateProduct(ProductDto productDto);
+	ResponseProductDto updateProduct(RequestProductDto productDto);
 
 }

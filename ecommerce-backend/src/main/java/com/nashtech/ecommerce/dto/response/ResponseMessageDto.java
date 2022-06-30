@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.response;
 
 import java.time.LocalDateTime;
 

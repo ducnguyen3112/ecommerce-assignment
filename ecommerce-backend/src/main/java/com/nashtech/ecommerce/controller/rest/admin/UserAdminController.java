@@ -1,6 +1,8 @@
-package com.nashtech.ecommerce.controller.rest;
+package com.nashtech.ecommerce.controller.rest.admin;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,35 +14,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
-import com.nashtech.ecommerce.dto.SignUpDto;
-import com.nashtech.ecommerce.dto.UserDto;
+import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
+import com.nashtech.ecommerce.dto.request.RequestUserDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
-	
+@RequestMapping("/admin/users")
+public class UserAdminController {
+
 	@Autowired
 	private UserService userService;
 
 	@GetMapping
-	public List<UserDto> findAllUserDtos() {
+	public List<ResponseUserDto> findAllUserDtos() {
 		return userService.findAllUserDtos();
 	}
 
 	@GetMapping("/{id}")
-	public UserDto findUserDtoById(@PathVariable Long id) {
+	public ResponseUserDto findUserDtoById(@PathVariable Long id) {
 		return userService.findUserDtoById(id);
 	}
 
 	@PostMapping
-	public UserDto saveUserDto(@RequestBody SignUpDto signUpDto) {
+	public ResponseUserDto saveUserDto(@Valid @RequestBody RequestSignUpDto signUpDto) {
 		return userService.createUser(signUpDto);
 	}
 
 	@PutMapping
-	public UserDto updateUserDto(@RequestBody UserDto userDto) {
+	public ResponseUserDto updateUserDto(@Valid @RequestBody RequestUserDto userDto) {
 		return userService.updateUser(userDto);
 	}
 
@@ -48,5 +51,5 @@ public class UserController {
 	public ResponseMessageDto deleteUser(@PathVariable Long id) {
 		return userService.deleteUser(id);
 	}
-	
+
 }

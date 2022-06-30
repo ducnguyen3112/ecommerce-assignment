@@ -12,9 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nashtech.ecommerce.service.CloudDinaryService;
 
 @Service
-public class CloudDinaryService {
+public class CloudDinaryServiceImpl implements CloudDinaryService{
 	
 	Cloudinary cloudinary;
 	private Map<String, String> valueMap = new HashMap<String, String>();
@@ -26,13 +27,13 @@ public class CloudDinaryService {
 	@Value("${clouddinary.api-secret}")
 	private String apiSecret;
 
-	public CloudDinaryService() {
+	public CloudDinaryServiceImpl() {
 		valueMap.put("cloud_name", cloudName);
 		valueMap.put("api_key", apiKey);
 		valueMap.put("api_secret", apiSecret);
 		cloudinary = new Cloudinary(valueMap);
 	}
-
+	@Override
 	public Map<?, ?> upload(MultipartFile multipartFile) throws IOException {
 		File file = convert(multipartFile);
 		Map<?, ?> resultMap = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
@@ -40,8 +41,8 @@ public class CloudDinaryService {
 		return resultMap;
 
 	}
-
-	private File convert(MultipartFile multipartFile) {
+	@Override
+	public File convert(MultipartFile multipartFile) {
 		File file = new File(multipartFile.getOriginalFilename());
 
 		try {

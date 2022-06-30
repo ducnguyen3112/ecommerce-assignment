@@ -16,9 +16,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
-import com.nashtech.ecommerce.dto.SignUpDto;
-import com.nashtech.ecommerce.dto.UserDto;
+import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
+import com.nashtech.ecommerce.dto.request.RequestUserDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.entity.Role;
 import com.nashtech.ecommerce.entity.RoleName;
 import com.nashtech.ecommerce.entity.User;
@@ -53,14 +54,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public List<UserDto> findAllUserDtos() {
+	public List<ResponseUserDto> findAllUserDtos() {
 		List<User> userList = userRepository.findAll();
-		return modelMapper.map(userList, new TypeToken<List<UserDto>>() {
+		return modelMapper.map(userList, new TypeToken<List<ResponseUserDto>>() {
 		}.getType());
 	}
 
 	@Override
-	public UserDto findUserDtoById(Long id) {
+	public ResponseUserDto findUserDtoById(Long id) {
 		Optional<User> optional = userRepository.findById(id);
 		User user = null;
 		if (optional.isPresent()) {
@@ -68,11 +69,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		} else {
 			throw new ResourceNotFoundException("Did not find user with id = " + id);
 		}
-		return modelMapper.map(user, UserDto.class);
+		return modelMapper.map(user, ResponseUserDto.class);
 	}
 
 	@Override
-	public UserDto createUser(SignUpDto signUpDto) {
+	public ResponseUserDto createUser(RequestSignUpDto signUpDto) {
 		signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 		User user=modelMapper.map(signUpDto, User.class);
 		user.setRegisteredAt(new Date());
@@ -91,16 +92,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			}
 		});
 		user.setRoles(roles);
-		return modelMapper.map(userRepository.save(user), UserDto.class);
+		return modelMapper.map(userRepository.save(user), ResponseUserDto.class);
 	}
 
 	@Override
-	public UserDto updateUser(UserDto userDto) {
+	public ResponseUserDto updateUser(RequestUserDto userDto) {
 		User user = userRepository.findById(userDto.getId()).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find user has email = " + userDto.getId()));
 		modelMapper.map(userDto,user);
 		user=userRepository.save(user);
-		return modelMapper.map(user, UserDto.class);
+		return modelMapper.map(user, ResponseUserDto.class);
 	}
 
 	@Override
@@ -113,11 +114,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public UserDto findUserDtoByEmail(String email) {
+	public ResponseUserDto findUserDtoByEmail(String email) {
 
 		User user = userRepository.findByEmail(email).orElseThrow(
 				() -> new ResourceNotFoundException("Did not find user has email = " + email));
-		return modelMapper.map(user, UserDto.class);
+		return modelMapper.map(user, ResponseUserDto.class);
 	}
 	@Override
 	public boolean existByEmail(String email) {

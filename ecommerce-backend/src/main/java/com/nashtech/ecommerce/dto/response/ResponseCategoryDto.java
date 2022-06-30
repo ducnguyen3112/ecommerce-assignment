@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.response;
 
 import com.nashtech.ecommerce.entity.Category;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoryDto {
+public class ResponseCategoryDto {
 	
 	private Long id;
 	

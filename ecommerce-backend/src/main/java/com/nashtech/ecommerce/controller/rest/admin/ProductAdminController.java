@@ -1,6 +1,8 @@
-package com.nashtech.ecommerce.controller.rest;
+package com.nashtech.ecommerce.controller.rest.admin;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,34 +14,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nashtech.ecommerce.dto.ProductDto;
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.request.RequestProductDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.service.ProductService;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
-	
+@RequestMapping("/admin/products")
+public class ProductAdminController {
 	@Autowired
 	private ProductService productService;
 
 	@GetMapping
-	public List<ProductDto> findAllProductDtos() {
+	public List<ResponseProductDto> findAllProductDtos() {
 		return productService.findAllProductDtos();
 	}
 
 	@GetMapping("/{id}")
-	public ProductDto findProductDtoById(@PathVariable Long id) {
+	public ResponseProductDto findProductDtoById(@PathVariable Long id) {
 		return productService.findProductDtoById(id);
 	}
 
 	@PostMapping
-	public ProductDto createProductDto(@RequestBody ProductDto productDto) {
+	public ResponseProductDto createProductDto(@Valid @RequestBody RequestProductDto productDto) {
 		return productService.createProduct(productDto);
 	}
 
 	@PutMapping
-	public ProductDto updateProductDto(@RequestBody ProductDto productDto) {
+	public ResponseProductDto updateProductDto(@Valid @RequestBody RequestProductDto productDto) {
 		return productService.updateProduct(productDto);
 	}
 

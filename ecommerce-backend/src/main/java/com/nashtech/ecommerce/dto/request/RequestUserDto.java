@@ -1,6 +1,8 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.request;
 
 import java.util.Date;
+
+import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserDto {
+public class RequestUserDto {
 	
 	private Long id;
 	
@@ -22,7 +24,7 @@ public class UserDto {
 	private String lastName;
 	
 	private String phoneNum;
-	
+	@Email
 	private String email;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

@@ -1,6 +1,8 @@
-package com.nashtech.ecommerce.controller.rest;
+package com.nashtech.ecommerce.controller.rest.admin;
 
 import java.time.LocalDateTime;
+
+import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nashtech.ecommerce.dto.ResponseMessageDto;
-import com.nashtech.ecommerce.dto.SignInDto;
-import com.nashtech.ecommerce.dto.SignInResponse;
-import com.nashtech.ecommerce.dto.SignUpDto;
+import com.nashtech.ecommerce.dto.request.RequestSignInDto;
+import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
+import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
+import com.nashtech.ecommerce.dto.response.ResponseSignIn;
 import com.nashtech.ecommerce.security.UserDetailsImpl;
 import com.nashtech.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.ecommerce.service.RoleService;
 import com.nashtech.ecommerce.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/admin/auth")
+public class AuthAdminController {
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -42,20 +44,20 @@ public class AuthController {
 	ModelMapper modelMapper;
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
+	public ResponseEntity<?> signIn(@Valid @RequestBody RequestSignInDto signInDto) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(signInDto.getEmail(),
 						signInDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String token = jwtUtils.generateJwtToken(authentication);
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-		return ResponseEntity.ok(new SignInResponse(userDetailsImpl.getName(),
+		return ResponseEntity.ok(new ResponseSignIn(userDetailsImpl.getName(),
 				userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities(), token));
 
 	}
 
 	@PostMapping("/signup")
-	public ResponseMessageDto signUp(@RequestBody SignUpDto signUpDto) {
+	public ResponseMessageDto signUp(@Valid @RequestBody RequestSignUpDto signUpDto) {
 		if (userService.existByEmail(signUpDto.getEmail())) {
 			return new ResponseMessageDto(HttpStatus.OK, "Email is existed",
 					LocalDateTime.now());

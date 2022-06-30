@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.response;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AccessDeniedResponse {
+public class ResponseAccessDenied {
 	private int status;
 	private String message;
 	private String error;

@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.dto;
+package com.nashtech.ecommerce.dto.response;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductDto {
+public class ResponseProductDto {
 	
 	private Long id;
 	

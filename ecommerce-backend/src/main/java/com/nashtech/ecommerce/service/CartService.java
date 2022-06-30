@@ -1,13 +1,14 @@
 package com.nashtech.ecommerce.service;
 
-import com.nashtech.ecommerce.dto.CartDto;
+import com.nashtech.ecommerce.dto.request.RequestCartDto;
+import com.nashtech.ecommerce.dto.response.ResponseCartDto;
 
 public interface CartService {
 
-	CartDto findCartDtoById(Long id);
+	ResponseCartDto findCartDtoById(Long id);
 
-	CartDto createCart(CartDto cartDto);
+	ResponseCartDto createCart(RequestCartDto cartDto);
 
-	CartDto updateCart(CartDto cartDto);
+	ResponseCartDto updateCart(RequestCartDto cartDto);
 
 }
