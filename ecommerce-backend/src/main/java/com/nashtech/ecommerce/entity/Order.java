@@ -24,29 +24,29 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
-	
+
 	@Id
 	@Column(name = "order_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "total")
 	private Long total;
-	
+
 	@Column(name = "status")
 	private int status;
-	
+
 	@Column(name = "created_at")
 	private Date createdAt;
-	
+
 	@Column(name = "modified_at")
 	private Date modifiedAt;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@OneToMany(mappedBy = "order")
 	List<OrderItem> oderItems;
-	
+
 }

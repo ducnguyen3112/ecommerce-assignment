@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,9 +27,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				ex.getMessage(), LocalDateTime.now());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.NOT_FOUND);
 	}
-
-	
-
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
@@ -37,7 +35,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				ex.getAllErrors().get(0).getDefaultMessage(), LocalDateTime.now());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
-
+	
+	@Override
+	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+			HttpRequestMethodNotSupportedException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+		ResponseMessageDto errorResponse = new ResponseMessageDto(HttpStatus.METHOD_NOT_ALLOWED,
+				ex.getMessage(), LocalDateTime.now());
+		return new ResponseEntity<Object>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUnwantedException(Exception ex) {
 		ResponseMessageDto errorResponse = new ResponseMessageDto(
@@ -47,5 +54,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorResponse,
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
 
 }

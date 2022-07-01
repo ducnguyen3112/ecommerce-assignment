@@ -1,6 +1,6 @@
 package com.nashtech.ecommerce.controller.rest.admin;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.ecommerce.dto.request.RequestProductDto;
+import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.service.ProductService;
@@ -26,8 +28,15 @@ public class ProductAdminController {
 	private ProductService productService;
 
 	@GetMapping
-	public List<ResponseProductDto> findAllProductDtos() {
-		return productService.findAllProductDtos();
+	public ResponseListProduct findAllProductDtos(
+			@RequestParam(name="name",required = false) String name,
+			@RequestParam("status") Optional<Integer> statusOptional,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(10);
+		int status=statusOptional.orElse(-1);
+		return productService.findAllProduct(name,status,currentPage, pageSize);
 	}
 
 	@GetMapping("/{id}")
@@ -36,12 +45,14 @@ public class ProductAdminController {
 	}
 
 	@PostMapping
-	public ResponseProductDto createProductDto(@Valid @RequestBody RequestProductDto productDto) {
+	public ResponseProductDto createProductDto(
+			@Valid @RequestBody RequestProductDto productDto) {
 		return productService.createProduct(productDto);
 	}
 
 	@PutMapping
-	public ResponseProductDto updateProductDto(@Valid @RequestBody RequestProductDto productDto) {
+	public ResponseProductDto updateProductDto(
+			@Valid @RequestBody RequestProductDto productDto) {
 		return productService.updateProduct(productDto);
 	}
 

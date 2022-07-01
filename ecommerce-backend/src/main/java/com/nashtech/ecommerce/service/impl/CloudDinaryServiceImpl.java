@@ -12,14 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nashtech.ecommerce.exception.CustomRuntimeException;
 import com.nashtech.ecommerce.service.CloudDinaryService;
 
 @Service
-public class CloudDinaryServiceImpl implements CloudDinaryService{
-	
+public class CloudDinaryServiceImpl implements CloudDinaryService {
+
 	Cloudinary cloudinary;
 	private Map<String, String> valueMap = new HashMap<String, String>();
-	
+
 	@Value("${clouddinary.cloud-name}")
 	private String cloudName;
 	@Value("${clouddinary.api-key}")
@@ -33,6 +34,7 @@ public class CloudDinaryServiceImpl implements CloudDinaryService{
 		valueMap.put("api_secret", apiSecret);
 		cloudinary = new Cloudinary(valueMap);
 	}
+
 	@Override
 	public Map<?, ?> upload(MultipartFile multipartFile) throws IOException {
 		File file = convert(multipartFile);
@@ -41,19 +43,17 @@ public class CloudDinaryServiceImpl implements CloudDinaryService{
 		return resultMap;
 
 	}
-	@Override
-	public File convert(MultipartFile multipartFile) {
-		File file = new File(multipartFile.getOriginalFilename());
 
-		try {
-			FileOutputStream fOutputStream = new FileOutputStream(file);
+	@Override
+	public File convert(MultipartFile multipartFile)  {
+		File file = new File(multipartFile.getOriginalFilename());
+			try {
+				FileOutputStream fOutputStream = new FileOutputStream(file);
 			fOutputStream.write(multipartFile.getBytes());
 			fOutputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return file;
-
+			return file;
+			} catch (IOException e) {
+				throw new CustomRuntimeException(e.getMessage(), e);
+			}
 	}
 }

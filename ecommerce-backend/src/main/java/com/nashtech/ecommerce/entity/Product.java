@@ -28,39 +28,39 @@ public class Product {
 	@Column(name = "product_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "product_name")
 	private String productName;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "inventory")
 	private int inventory;
-	
+
 	@Column(name = "price")
 	private Long price;
-	
+
 	@Column(name = "created_at")
 	private Date createdAt;
-	
+
 	@Column(name = "modified_at")
 	private Date modifiedAt;
-	
+
 	@Column(name = "status")
 	private int status;
-	
+
 	@Column(name = "image")
 	private String image;
-	
+
 	@OneToMany(mappedBy = "product")
 	List<OrderItem> oderItems;
-	
+
 	@OneToMany(mappedBy = "product")
 	List<CartItem> cartItems;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category_id")
 	private Category category;
-	
+
 }

@@ -1,6 +1,6 @@
 package com.nashtech.ecommerce.controller.rest.admin;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
 import com.nashtech.ecommerce.dto.request.RequestUserDto;
+import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
@@ -28,8 +30,15 @@ public class UserAdminController {
 	private UserService userService;
 
 	@GetMapping
-	public List<ResponseUserDto> findAllUserDtos() {
-		return userService.findAllUserDtos();
+	public ResponseListUser findAllUser(
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("status") Optional<Integer> statusOptional,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(10);
+		int status=statusOptional.orElse(-1);
+		return userService.findAllUser(name,status,currentPage, pageSize);
 	}
 
 	@GetMapping("/{id}")

@@ -1,14 +1,11 @@
 package com.nashtech.ecommerce.service;
 
-import java.util.List;
-
 import com.nashtech.ecommerce.dto.request.RequestProductDto;
+import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 
 public interface ProductService {
-
-	List<ResponseProductDto> findAllProductDtos();
 
 	ResponseProductDto findProductDtoById(Long id);
 
@@ -17,5 +14,10 @@ public interface ProductService {
 	ResponseProductDto createProduct(RequestProductDto productDto);
 
 	ResponseProductDto updateProduct(RequestProductDto productDto);
+	
+	ResponseListProduct findAllProduct(String productName, int status, int page,
+			int size);
+
+	
 
 }

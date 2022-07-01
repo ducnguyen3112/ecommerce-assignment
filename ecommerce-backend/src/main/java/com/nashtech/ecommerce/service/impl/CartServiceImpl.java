@@ -43,10 +43,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public ResponseCartDto updateCart(RequestCartDto cartDto) {
-		Cart cart = cartRepository.findById(cartDto.getId()).orElseThrow(
-				() -> new ResourceNotFoundException("Did not find cart with id = " + cartDto.getId()));
-		modelMapper.map(cartDto,cart);
-		cart=cartRepository.save(cart);
+		Cart cart = cartRepository.findById(cartDto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Did not find cart with id = " + cartDto.getId()));
+		modelMapper.map(cartDto, cart);
+		cart = cartRepository.save(cart);
 		return modelMapper.map(cart, ResponseCartDto.class);
 	}
 

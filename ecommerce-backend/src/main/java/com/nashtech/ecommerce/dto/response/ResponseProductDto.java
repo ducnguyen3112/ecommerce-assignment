@@ -12,24 +12,24 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseProductDto {
-	
+
 	private Long id;
-	
+
 	private String productName;
-	
+
 	private String description;
-	
+
 	private int inventory;
-	
+
 	private Long price;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdAt;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date modifiedAt;
-	
+
 	private int status;
-	
+
 	private String image;
 }

@@ -47,8 +47,10 @@ public class WebSecurityConfig {
 		http.cors().and().csrf().disable().exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeRequests().antMatchers("/auth/**").permitAll().anyRequest()
-				.authenticated();
+				.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
+				.authorizeRequests().antMatchers("/auth/**").permitAll()
+				.anyRequest().authenticated();
+				
 		http.addFilterBefore(authenticationJwtTokenFilter(),
 				UsernamePasswordAuthenticationFilter.class);
 		return http.build();

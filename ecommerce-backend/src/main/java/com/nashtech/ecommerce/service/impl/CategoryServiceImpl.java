@@ -31,7 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<ResponseCategoryDto> findAllCategoryDtos() {
 		List<Category> categorys = categoryRepository.findAll();
-		return modelMapper.map(categorys, new TypeToken<List<ResponseCategoryDto>>() {}.getType());
+		return modelMapper.map(categorys, new TypeToken<List<ResponseCategoryDto>>() {
+		}.getType());
 	}
 
 	@Override
@@ -51,10 +52,11 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto) {
-		Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow(
-				() -> new ResourceNotFoundException("Did not find category with id = " + categoryDto.getId()));
-		modelMapper.map(categoryDto,category);
-		category=categoryRepository.save(category);
+		Category category = categoryRepository.findById(categoryDto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Did not find category with id = " + categoryDto.getId()));
+		modelMapper.map(categoryDto, category);
+		category = categoryRepository.save(category);
 		return modelMapper.map(category, ResponseCategoryDto.class);
 	}
 }

@@ -10,12 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ResponseCategoryDto {
-	
+
 	private Long id;
-	
+
 	private String categoryName;
-	
+
 	private String description;
-	
+
 	private Category parentCategory;
 }

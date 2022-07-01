@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +42,9 @@ public class User {
 
 	@Column(name = "last_name")
 	private String lastName;
+	
+	@Formula( "CONCAT_WS( ' ', first_name, last_name ) " )
+	private String fullName;
 
 	@Column(name = "phone_num")
 	private String phoneNumber;
@@ -70,7 +75,6 @@ public class User {
 	private List<Cart> cartList;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	Set<Role> roles = new HashSet<Role>();
 }

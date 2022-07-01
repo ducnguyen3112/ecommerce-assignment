@@ -26,8 +26,9 @@ public class FileUpLoadAdminController {
 	private CloudDinaryService cloudDinaryService;
 
 	@PostMapping("/cloudinary")
-	public ResponseEntity<ResponseMessageDto> upLoad(@NotEmpty
-			@RequestParam("file") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<ResponseMessageDto> upLoad(
+			@NotEmpty @RequestParam("file") MultipartFile multipartFile)
+			throws IOException {
 		Map<?, ?> resultMap = cloudDinaryService.upload(multipartFile);
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessageDto(
 				HttpStatus.OK, resultMap.get("url").toString(), LocalDateTime.now()));

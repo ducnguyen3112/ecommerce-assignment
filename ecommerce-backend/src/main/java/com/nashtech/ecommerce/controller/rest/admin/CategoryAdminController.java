@@ -20,7 +20,7 @@ import com.nashtech.ecommerce.service.CategoryService;
 @RestController
 @RequestMapping("/admin/categories")
 public class CategoryAdminController {
-	
+
 	@Autowired
 	private CategoryService categoryService;
 
@@ -35,12 +35,14 @@ public class CategoryAdminController {
 	}
 
 	@PostMapping
-	public ResponseCategoryDto createCategoryDto(@Valid @RequestBody RequestCategoryDto categoryDto) {
+	public ResponseCategoryDto createCategoryDto(
+			@Valid @RequestBody RequestCategoryDto categoryDto) {
 		return categoryService.createCategory(categoryDto);
 	}
 
 	@PutMapping
-	public ResponseCategoryDto updateCategoryDto(@Valid @RequestBody RequestCategoryDto categoryDto) {
+	public ResponseCategoryDto updateCategoryDto(
+			@Valid @RequestBody RequestCategoryDto categoryDto) {
 		return categoryService.updateCategory(categoryDto);
 	}
 }

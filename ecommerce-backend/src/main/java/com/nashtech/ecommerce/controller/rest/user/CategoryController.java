@@ -14,7 +14,7 @@ import com.nashtech.ecommerce.service.CategoryService;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-	
+
 	@Autowired
 	private CategoryService categoryService;
 
