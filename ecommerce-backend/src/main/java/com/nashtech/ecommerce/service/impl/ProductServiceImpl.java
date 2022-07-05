@@ -21,6 +21,7 @@ import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.entity.Product;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.ProductRepository;
+import com.nashtech.ecommerce.repository.RatingRepository;
 import com.nashtech.ecommerce.service.ProductService;
 
 @Service
@@ -28,13 +29,15 @@ public class ProductServiceImpl implements ProductService {
 
 	private ProductRepository productRepository;
 	private ModelMapper modelMapper;
+	private RatingRepository ratingRepository;
 
 	@Autowired
 	public ProductServiceImpl(ProductRepository productRepository,
-			ModelMapper modelMapper) {
+			ModelMapper modelMapper,RatingRepository ratingRepository) {
 		super();
 		this.productRepository = productRepository;
 		this.modelMapper = modelMapper;
+		this.ratingRepository=ratingRepository;
 	}
 
 	@Override
@@ -55,13 +58,19 @@ public class ProductServiceImpl implements ProductService {
 			}
 			
 		}
+		List<Product> products=productPage.getContent();
+		List<ResponseProductDto> responseProductDtos= modelMapper.map(products,
+				new TypeToken<List<ResponseProductDto>>() {
+				}.getType());
+		responseProductDtos.forEach(responseProductDto -> {
+			responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f));
+		});
+		
 		return ResponseListProduct.builder().totalProduct(productPage.getTotalElements())
 				.perPage(productPage.getNumberOfElements())
 				.currentPage(productPage.getNumber()+1)
 				.lastPage(productPage.getTotalPages())
-				.productDtos(modelMapper.map(productPage.getContent(),
-						new TypeToken<List<ResponseProductDto>>() {
-						}.getType()))
+				.productDtos(responseProductDtos)
 				.build();
 	}
 
@@ -70,7 +79,9 @@ public class ProductServiceImpl implements ProductService {
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Did not find product with id = " + id));
-		return modelMapper.map(product, ResponseProductDto.class);
+		ResponseProductDto responseProductDto=modelMapper.map(product, ResponseProductDto.class);
+		responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f));
+		return responseProductDto;
 	}
 
 	@Override

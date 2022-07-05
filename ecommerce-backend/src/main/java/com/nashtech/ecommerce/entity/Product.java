@@ -55,7 +55,7 @@ public class Product {
 
 	@OneToMany(mappedBy = "product")
 	List<OrderItem> oderItems;
-
+	
 	@OneToMany(mappedBy = "product")
 	List<CartItem> cartItems;
 

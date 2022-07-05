@@ -32,4 +32,6 @@ public class ResponseProductDto {
 	private int status;
 
 	private String image;
+	
+	private float avgScores;
 }

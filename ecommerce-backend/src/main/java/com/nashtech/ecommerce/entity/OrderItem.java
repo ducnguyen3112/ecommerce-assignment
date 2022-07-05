@@ -36,9 +36,6 @@ public class OrderItem {
 	@Column(name = "created_at")
 	private Date createdAt;
 
-	@Column(name = "rating")
-	private int rating;
-
 	@ManyToOne
 	@MapsId("orderId")
 	@JoinColumn(name = "order_id")
