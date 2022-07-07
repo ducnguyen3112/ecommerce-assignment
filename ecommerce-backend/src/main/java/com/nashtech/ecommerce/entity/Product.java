@@ -54,7 +54,6 @@ public class Product {
 	private Date modifiedAt;
 	
 	@Enumerated(EnumType.STRING)
-	@NaturalId
 	@Column(name = "status")
 	private ProductStatus status;
 

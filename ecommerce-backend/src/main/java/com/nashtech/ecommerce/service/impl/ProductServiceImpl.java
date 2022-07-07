@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.nashtech.ecommerce.dto.request.RequestCreateProductDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,9 +86,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResponseProductDto createProduct(RequestProductDto productDto) {
-		productDto.setCreatedAt(new Date());
-		productDto.setModifiedAt(new Date());
+	public ResponseProductDto createProduct(RequestCreateProductDto productDto) {
 		productDto.setStatus(ProductStatus.STOCKING);
 		Product product = productRepository
 				.save(modelMapper.map(productDto, Product.class));
@@ -95,10 +94,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResponseProductDto updateProduct(RequestProductDto productDto) {
-		Product product = productRepository.findById(productDto.getId())
+	public ResponseProductDto updateProduct(RequestProductDto productDto,Long id) {
+		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(
-						"Did not find product has id = " + productDto.getId()));
+						"Did not find product has id = " + id));
 		modelMapper.map(productDto, product);
 		product = productRepository.save(product);
 		return modelMapper.map(product, ResponseProductDto.class);

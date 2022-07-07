@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.nashtech.ecommerce.dto.request.RequestCreateProductDto;
 import org.hibernate.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,14 +60,14 @@ public class ProductAdminController {
 
 	@PostMapping
 	public ResponseProductDto createProductDto(
-			@Valid @RequestBody RequestProductDto productDto) {
+			@Valid @RequestBody RequestCreateProductDto productDto) {
 		return productService.createProduct(productDto);
 	}
 
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseProductDto updateProductDto(
-			@Valid @RequestBody RequestProductDto productDto) {
-		return productService.updateProduct(productDto);
+			@Valid @RequestBody RequestProductDto productDto,@PathVariable Long id) {
+		return productService.updateProduct(productDto,id);
 	}
 
 	@DeleteMapping("/{id}")

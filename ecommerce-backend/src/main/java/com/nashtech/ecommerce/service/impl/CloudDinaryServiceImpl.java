@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,15 +15,15 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.nashtech.ecommerce.exception.CustomRuntimeException;
 import com.nashtech.ecommerce.service.CloudDinaryService;
-
 @Service
+@Slf4j
 public class CloudDinaryServiceImpl implements CloudDinaryService {
 
 	Cloudinary cloudinary;
 	private Map<String, String> valueMap = new HashMap<String, String>();
 
 	@Value("${clouddinary.cloud-name}")
-	private String cloudName;
+	public  String cloudName;
 	@Value("${clouddinary.api-key}")
 	private String apiKey;
 	@Value("${clouddinary.api-secret}")
@@ -30,8 +31,11 @@ public class CloudDinaryServiceImpl implements CloudDinaryService {
 
 	public CloudDinaryServiceImpl() {
 		valueMap.put("cloud_name", cloudName);
+		log.info(cloudName);
 		valueMap.put("api_key", apiKey);
+		log.info(apiKey);
 		valueMap.put("api_secret", apiSecret);
+		log.info(apiSecret);
 		cloudinary = new Cloudinary(valueMap);
 	}
 

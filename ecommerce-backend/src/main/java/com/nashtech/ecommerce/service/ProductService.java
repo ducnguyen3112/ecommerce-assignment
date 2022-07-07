@@ -1,5 +1,6 @@
 package com.nashtech.ecommerce.service;
 
+import com.nashtech.ecommerce.dto.request.RequestCreateProductDto;
 import com.nashtech.ecommerce.dto.request.RequestProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
@@ -12,9 +13,9 @@ public interface ProductService {
 
 	ResponseMessageDto deleteProduct(Long id);
 
-	ResponseProductDto createProduct(RequestProductDto productDto);
+	ResponseProductDto createProduct(RequestCreateProductDto productDto);
 
-	ResponseProductDto updateProduct(RequestProductDto productDto);
+	ResponseProductDto updateProduct(RequestProductDto productDto,Long id);
 	
 	ResponseListProduct findAllProduct(String productName, ProductStatus status, int page,
 			int size);
