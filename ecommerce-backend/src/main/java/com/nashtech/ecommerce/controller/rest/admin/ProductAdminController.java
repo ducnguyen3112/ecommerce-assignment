@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.hibernate.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.nashtech.ecommerce.dto.request.RequestProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
+import com.nashtech.ecommerce.enums.ProductStatus;
 import com.nashtech.ecommerce.service.ProductService;
 
 @RestController
@@ -29,14 +31,25 @@ public class ProductAdminController {
 
 	@GetMapping
 	public ResponseListProduct findAllProductDtos(
-			@RequestParam(name="name",required = false) String name,
-			@RequestParam("status") Optional<Integer> statusOptional,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam(name = "status", required = false) String status,
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(10);
-		int status=statusOptional.orElse(-1);
-		return productService.findAllProduct(name,status,currentPage, pageSize);
+		ProductStatus productStatus = null;
+		if (status!=null) {
+			if (status.equalsIgnoreCase("STOCKING")) {
+				productStatus = ProductStatus.STOCKING;
+			} else if (status.equalsIgnoreCase("STOCKING")) {
+				productStatus = ProductStatus.OUT_OF_STOCK;
+			} else {
+				throw new TypeMismatchException("status must be STOCKING or OUT_OF_STOCK ");
+			}
+		}else {
+			productStatus=null;
+		}
+		return productService.findAllProduct(name, productStatus, currentPage, pageSize);
 	}
 
 	@GetMapping("/{id}")

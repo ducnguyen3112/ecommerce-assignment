@@ -66,7 +66,7 @@ public class AuthController {
 			return new ResponseMessageDto(HttpStatus.OK, "Phone number is existed",
 					LocalDateTime.now());
 		}
-		userService.createUser(signUpDto);
+		userService.signUp(signUpDto);
 		return new ResponseMessageDto(HttpStatus.OK, "Register success",
 				LocalDateTime.now());
 

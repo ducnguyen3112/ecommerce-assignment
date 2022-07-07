@@ -19,8 +19,6 @@ public interface UserService {
 
 	ResponseUserDto updateUser(RequestUserDto userDto);
 
-	ResponseUserDto createUser(RequestSignUpDto signUpDto);
-
 	public UserDetailsImpl loadUserByUsername(String email)
 			throws UsernameNotFoundException;
 
@@ -29,4 +27,8 @@ public interface UserService {
 	boolean existByPhoneNumber(String phoneNumber);
 
 	ResponseListUser findAllUser(String name, int status, int page, int size);
+
+	ResponseUserDto createUser(RequestUserDto requestUserDto);
+
+	ResponseUserDto signUp(RequestSignUpDto signUpDto);
 }

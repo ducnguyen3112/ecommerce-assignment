@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +21,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.NaturalId;
+
+import com.nashtech.ecommerce.enums.UserStatus;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,10 +68,12 @@ public class User {
 
 	@Column(name = "address")
 	private String address;
-
+	
+	@Enumerated(EnumType.STRING)
+	@NaturalId
 	@Column(name = "status")
-	private int status;
-
+	private UserStatus status;
+	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH })
 	private List<Order> orderList;

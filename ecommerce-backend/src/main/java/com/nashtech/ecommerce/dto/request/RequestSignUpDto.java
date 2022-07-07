@@ -1,7 +1,5 @@
 package com.nashtech.ecommerce.dto.request;
 
-import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -22,10 +20,8 @@ public class RequestSignUpDto {
 	private String lastName;
 	@Email
 	private String email;
-	@Pattern(regexp = "/d*")
+	@Pattern(regexp = "\\d*")
 	private String phoneNumber;
 	@NotEmpty
 	private String password;
-	@NotEmpty
-	private Set<String> roles;
 }

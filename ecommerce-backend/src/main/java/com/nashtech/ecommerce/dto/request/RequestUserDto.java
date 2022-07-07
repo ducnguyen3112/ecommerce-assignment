@@ -1,39 +1,39 @@
 package com.nashtech.ecommerce.dto.request;
 
-import java.util.Date;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nashtech.ecommerce.enums.UserStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class RequestUserDto {
-
 	private Long id;
-
+	@NotEmpty
 	private String firstName;
-
+	@NotEmpty
 	private String lastName;
-
-	private String phoneNum;
 	@Email
 	private String email;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date registeredAt;
-
-	private String avatar;
-
+	@Pattern(regexp = "\\d*")
+	private String phoneNumber;
+	@NotEmpty
+	private String password;
+	@NotEmpty
+	private Set<String> roles;
 	private String address;
-
-	private int status;
+	private String avatar;
+	private String phoneNum;
+	private UserStatus status;
 
 }

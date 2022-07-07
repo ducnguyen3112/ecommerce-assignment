@@ -4,6 +4,7 @@ import com.nashtech.ecommerce.dto.request.RequestProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
+import com.nashtech.ecommerce.enums.ProductStatus;
 
 public interface ProductService {
 
@@ -15,7 +16,7 @@ public interface ProductService {
 
 	ResponseProductDto updateProduct(RequestProductDto productDto);
 	
-	ResponseListProduct findAllProduct(String productName, int status, int page,
+	ResponseListProduct findAllProduct(String productName, ProductStatus status, int page,
 			int size);
 
 	

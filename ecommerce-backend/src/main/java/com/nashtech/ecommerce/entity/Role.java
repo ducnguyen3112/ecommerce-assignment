@@ -11,6 +11,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
 
+import com.nashtech.ecommerce.enums.RoleName;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
 	@Id

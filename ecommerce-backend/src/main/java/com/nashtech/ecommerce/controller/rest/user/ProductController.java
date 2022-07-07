@@ -15,6 +15,7 @@ import com.nashtech.ecommerce.dto.request.RequestRatingDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseRatingDto;
+import com.nashtech.ecommerce.enums.ProductStatus;
 import com.nashtech.ecommerce.service.ProductService;
 import com.nashtech.ecommerce.service.RatingService;
 
@@ -30,12 +31,12 @@ public class ProductController {
 	@GetMapping
 	public ResponseListProduct findAllProductDtos(
 			@RequestParam(name = "name", required = false) String name,
-			@RequestParam("status") Optional<Integer> statusOptional,
+			@RequestParam("status") Optional<ProductStatus> statusOptional,
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(10);
-		int status = statusOptional.orElse(-1);
+		ProductStatus status = statusOptional.orElse(null);
 		return productService.findAllProduct(name, status, currentPage, pageSize);
 	}
 

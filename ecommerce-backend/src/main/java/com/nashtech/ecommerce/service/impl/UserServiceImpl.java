@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.TypeMismatchException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,12 @@ import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.entity.Role;
-import com.nashtech.ecommerce.entity.RoleName;
 import com.nashtech.ecommerce.entity.User;
+import com.nashtech.ecommerce.enums.RoleName;
+import com.nashtech.ecommerce.enums.UserStatus;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.UserRepository;
 import com.nashtech.ecommerce.security.UserDetailsImpl;
-import com.nashtech.ecommerce.service.RoleService;
 import com.nashtech.ecommerce.service.UserService;
 
 @Service
@@ -39,16 +40,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private UserRepository userRepository;
 	private ModelMapper modelMapper;
 	private PasswordEncoder passwordEncoder;
-	private RoleService roleService;
 
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
-			PasswordEncoder passwordEncoder, RoleService roleService) {
+			PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
-		this.roleService = roleService;
+
 	}
 
 	@Override
@@ -61,27 +61,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public ResponseListUser findAllUser(String name,int status,int page, int size) {
-		Pageable pageable = PageRequest.of(page-1, size);
-		Page<User> userPage =null;
-		if (status==-1) {
+	public ResponseListUser findAllUser(String name, int status, int page, int size) {
+		Pageable pageable = PageRequest.of(page - 1, size);
+		Page<User> userPage = null;
+		if (status == -1) {
 			if (StringUtils.hasText(name)) {
-				userPage=userRepository.findByFullNameContaining(name, pageable);
-			}else {
-				 userPage = userRepository.findAll(pageable);
+				userPage = userRepository.findByFullNameContaining(name, pageable);
+			} else {
+				userPage = userRepository.findAll(pageable);
 			}
-		}else if(status==1||status==0){
+		} else if (status == 1 || status == 0) {
 			if (StringUtils.hasText(name)) {
-				userPage=userRepository.findByStatusAndFullNameContaining(name, status, pageable);
-			}else {
-				 userPage = userRepository.findByStatus(status, pageable);
+				userPage = userRepository.findByStatusAndFullNameContaining(name, status,
+						pageable);
+			} else {
+				userPage = userRepository.findByStatus(status, pageable);
 			}
-			
+
 		}
 		return ResponseListUser.builder().totalUser(userPage.getTotalElements())
 				.perPage(userPage.getNumberOfElements())
-				.currentPage(userPage.getNumber()+1)
-				.lastPage(userPage.getTotalPages())
+				.currentPage(userPage.getNumber() + 1).lastPage(userPage.getTotalPages())
 				.responseUserDtos(modelMapper.map(userPage.getContent(),
 						new TypeToken<List<ResponseUserDto>>() {
 						}.getType()))
@@ -90,32 +90,44 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public ResponseUserDto findUserDtoById(Long id) {
-		
-		User user = userRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Did not find user has id = " + id));
+
+		User user = userRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Did not find user has id = " + id));
 		return modelMapper.map(user, ResponseUserDto.class);
 	}
 
 	@Override
-	public ResponseUserDto createUser(RequestSignUpDto signUpDto) {
+	public ResponseUserDto createUser(RequestUserDto signUpDto) {
 		signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 		User user = modelMapper.map(signUpDto, User.class);
 		user.setRegisteredAt(new Date());
-		user.setStatus(1);
-		Set<String> roleStr = signUpDto.getRoles();
+		user.setStatus(UserStatus.ACTIVE);
+		Set<String> strRoles = signUpDto.getRoles();
 		Set<Role> roles = new HashSet<Role>();
-		roleStr.forEach(role -> {
-			switch (role) {
-			case "admin":
-				Role adminRole = roleService.findByName(RoleName.ROLE_ADMIN);
-				roles.add(adminRole);
-				break;
-			default:
-				Role userRole = roleService.findByName(RoleName.ROLE_USER);
-				roles.add(userRole);
+		strRoles.forEach(strRole -> {
+			if (strRole.equalsIgnoreCase("admin")) {
+				roles.add(new Role((long) RoleName.ROLE_ADMIN.getValue(),
+						RoleName.ROLE_ADMIN));
+			} else if (strRole.equalsIgnoreCase("user")) {
+				roles.add(new Role((long) RoleName.ROLE_ADMIN.getValue(),
+						RoleName.ROLE_USER));
+			} else {
+					throw new TypeMismatchException("Roles must be admin or user ");
 			}
 		});
+		user.setRoles(roles);
+		return modelMapper.map(userRepository.save(user), ResponseUserDto.class);
+	}
+
+	@Override
+	public ResponseUserDto signUp(RequestSignUpDto signUpDto) {
+		signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+		User user = modelMapper.map(signUpDto, User.class);
+		user.setRegisteredAt(new Date());
+		user.setStatus(UserStatus.ACTIVE);
+
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(new Role((long) RoleName.ROLE_USER.getValue(), RoleName.ROLE_USER));
 		user.setRoles(roles);
 		return modelMapper.map(userRepository.save(user), ResponseUserDto.class);
 	}

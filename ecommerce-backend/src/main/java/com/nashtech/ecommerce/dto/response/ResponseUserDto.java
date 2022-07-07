@@ -1,8 +1,10 @@
 package com.nashtech.ecommerce.dto.response;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nashtech.ecommerce.enums.UserStatus;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +34,8 @@ public class ResponseUserDto {
 
 	private String address;
 
-	private int status;
+	private UserStatus status;
+	
+	private Set<ResponseRoleDto> roles;
 
 }

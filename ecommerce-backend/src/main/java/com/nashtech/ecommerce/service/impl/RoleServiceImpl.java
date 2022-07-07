@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nashtech.ecommerce.entity.Role;
-import com.nashtech.ecommerce.entity.RoleName;
+import com.nashtech.ecommerce.enums.RoleName;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.RoleRepository;
 import com.nashtech.ecommerce.service.RoleService;

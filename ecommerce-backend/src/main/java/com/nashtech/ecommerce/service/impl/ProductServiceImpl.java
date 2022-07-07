@@ -19,6 +19,7 @@ import com.nashtech.ecommerce.dto.response.ResponseListProduct;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.entity.Product;
+import com.nashtech.ecommerce.enums.ProductStatus;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.ProductRepository;
 import com.nashtech.ecommerce.repository.RatingRepository;
@@ -41,22 +42,21 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResponseListProduct findAllProduct( String productName,int status,int page, int size) {
+	public ResponseListProduct findAllProduct( String productName,ProductStatus status,int page, int size) {
 		Pageable pageable = PageRequest.of(page-1, size);
 		Page<Product> productPage =null;
-		if (status==-1) {
+		if (status==null) {
 			if (StringUtils.hasText(productName)) {
 				productPage=productRepository.findByProductNameContaining(productName, pageable);
 			}else {
 				 productPage = productRepository.findAll(pageable);
 			}
-		}else if(status==1||status==0){
+		}else {
 			if (StringUtils.hasText(productName)) {
 				productPage=productRepository.findByStatusAndProductNameContaining(productName, status, pageable);
 			}else {
 				 productPage = productRepository.findByStatus(status, pageable);
 			}
-			
 		}
 		List<Product> products=productPage.getContent();
 		List<ResponseProductDto> responseProductDtos= modelMapper.map(products,
@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
 	public ResponseProductDto createProduct(RequestProductDto productDto) {
 		productDto.setCreatedAt(new Date());
 		productDto.setModifiedAt(new Date());
-		productDto.setStatus(1);
+		productDto.setStatus(ProductStatus.STOCKING);
 		Product product = productRepository
 				.save(modelMapper.map(productDto, Product.class));
 		return modelMapper.map(product, ResponseProductDto.class);
