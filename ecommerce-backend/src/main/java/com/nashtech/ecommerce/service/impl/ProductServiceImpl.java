@@ -90,6 +90,8 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setStatus(ProductStatus.STOCKING);
 		Product product = productRepository
 				.save(modelMapper.map(productDto, Product.class));
+		product.setCreatedAt(new Date());
+		product.setModifiedAt(new Date());
 		return modelMapper.map(product, ResponseProductDto.class);
 	}
 
@@ -99,6 +101,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Did not find product has id = " + id));
 		modelMapper.map(productDto, product);
+		product.setModifiedAt(new Date());
 		product = productRepository.save(product);
 		return modelMapper.map(product, ResponseProductDto.class);
 	}

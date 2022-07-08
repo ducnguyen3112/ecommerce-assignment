@@ -20,23 +20,11 @@ import com.nashtech.ecommerce.service.CloudDinaryService;
 public class CloudDinaryServiceImpl implements CloudDinaryService {
 
 	Cloudinary cloudinary;
-	private Map<String, String> valueMap = new HashMap<String, String>();
 
-	@Value("${clouddinary.cloud-name}")
-	public  String cloudName;
-	@Value("${clouddinary.api-key}")
-	private String apiKey;
-	@Value("${clouddinary.api-secret}")
-	private String apiSecret;
 
-	public CloudDinaryServiceImpl() {
-		valueMap.put("cloud_name", cloudName);
-		log.info(cloudName);
-		valueMap.put("api_key", apiKey);
-		log.info(apiKey);
-		valueMap.put("api_secret", apiSecret);
-		log.info(apiSecret);
-		cloudinary = new Cloudinary(valueMap);
+	public CloudDinaryServiceImpl(Cloudinary cloudinary) {
+
+		this.cloudinary = cloudinary;
 	}
 
 	@Override
@@ -47,7 +35,6 @@ public class CloudDinaryServiceImpl implements CloudDinaryService {
 		return resultMap;
 
 	}
-
 	@Override
 	public File convert(MultipartFile multipartFile)  {
 		File file = new File(multipartFile.getOriginalFilename());
