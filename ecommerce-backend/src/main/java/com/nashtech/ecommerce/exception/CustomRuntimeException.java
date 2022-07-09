@@ -2,8 +2,9 @@ package com.nashtech.ecommerce.exception;
 
 public class CustomRuntimeException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
-	public CustomRuntimeException() {
+    private static final long serialVersionUID = 1L;
+
+    public CustomRuntimeException() {
         super();
     }
 

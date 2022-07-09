@@ -1,48 +1,45 @@
 package com.nashtech.ecommerce.controller.rest.admin;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.nashtech.ecommerce.dto.request.RequestCategoryDto;
 import com.nashtech.ecommerce.dto.response.ResponseCategoryDto;
 import com.nashtech.ecommerce.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/categories")
 public class CategoryAdminController {
 
-	@Autowired
-	private CategoryService categoryService;
+    @Autowired
+    private CategoryService categoryService;
 
-	@GetMapping
-	public List<ResponseCategoryDto> findAllCategoryDtos() {
-		return categoryService.findAllCategoryDtos();
-	}
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ResponseCategoryDto> findAllCategoryDtos() {
+        return categoryService.findAllCategory();
+    }
 
-	@GetMapping("/{id}")
-	public ResponseCategoryDto findCategoryDtoById(@PathVariable Long id) {
-		return categoryService.findCategoryDtoById(id);
-	}
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseCategoryDto findCategoryDtoById(@PathVariable Long id) {
+        return categoryService.findCategoryById(id);
+    }
 
-	@PostMapping
-	public ResponseCategoryDto createCategoryDto(
-			@Valid @RequestBody RequestCategoryDto categoryDto) {
-		return categoryService.createCategory(categoryDto);
-	}
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseCategoryDto createCategoryDto(
+            @Valid @RequestBody RequestCategoryDto categoryDto) {
+        return categoryService.createCategory(categoryDto);
+    }
 
-	@PutMapping
-	public ResponseCategoryDto updateCategoryDto(
-			@Valid @RequestBody RequestCategoryDto categoryDto) {
-		return categoryService.updateCategory(categoryDto);
-	}
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseCategoryDto updateCategoryDto(
+            @Valid @RequestBody RequestCategoryDto categoryDto) {
+        return categoryService.updateCategory(categoryDto);
+    }
 }

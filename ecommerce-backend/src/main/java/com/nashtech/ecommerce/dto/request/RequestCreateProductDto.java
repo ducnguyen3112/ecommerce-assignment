@@ -1,13 +1,12 @@
 package com.nashtech.ecommerce.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nashtech.ecommerce.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,16 +14,16 @@ import java.util.Date;
 @Setter
 public class RequestCreateProductDto {
 
+    @NotBlank
+    private String productName;
 
-	private String productName;
+    private String description;
 
-	private String description;
+    private int inventory;
 
-	private int inventory;
+    private Long price;
 
-	private Long price;
+    private ProductStatus status;
 
-	private ProductStatus status;
-
-	private String image;
+    private String image;
 }

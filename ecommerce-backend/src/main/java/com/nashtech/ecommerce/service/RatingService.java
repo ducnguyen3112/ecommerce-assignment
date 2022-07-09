@@ -5,6 +5,6 @@ import com.nashtech.ecommerce.dto.response.ResponseRatingDto;
 
 public interface RatingService {
 
-	ResponseRatingDto addRating(RequestRatingDto requestRatingDto, Long productId);
+    ResponseRatingDto addRating(RequestRatingDto requestRatingDto, Long productId);
 
 }

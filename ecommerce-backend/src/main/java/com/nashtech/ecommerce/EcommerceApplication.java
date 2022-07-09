@@ -16,21 +16,22 @@ import java.util.Map;
 public class EcommerceApplication {
 
     @Value("${clouddinary.cloud-name}")
-    public  String cloudName;
+    public String cloudName;
     @Value("${clouddinary.api-key}")
     private String apiKey;
     @Value("${clouddinary.api-secret}")
     private String apiSecret;
 
-	public static void main(String[] args) {
-		SpringApplication.run(EcommerceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EcommerceApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-	@Bean
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -39,6 +40,7 @@ public class EcommerceApplication {
             }
         };
     }
+
     @Bean
     public Cloudinary cloudinary() {
         Map<String, String> valueMap = new HashMap<>();

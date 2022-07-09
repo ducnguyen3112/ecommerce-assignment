@@ -1,14 +1,9 @@
 package com.nashtech.ecommerce.dto.response;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,14 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class ResponseListUser {
-	@JsonProperty("total")
-	private Long totalUser;
-	@JsonProperty("per_page")
-	private int perPage;
-	@JsonProperty("current_page")
-	private int currentPage;
-	@JsonProperty("last_page")
-	private int lastPage;
-	@JsonProperty("data")
-	private List<ResponseUserDto> responseUserDtos;
+    @JsonProperty("total")
+    private Long totalUser;
+    @JsonProperty("per_page")
+    private int perPage;
+    @JsonProperty("current_page")
+    private int currentPage;
+    @JsonProperty("last_page")
+    private int lastPage;
+    @JsonProperty("data")
+    private List<ResponseUserDto> responseUserDtos;
 }

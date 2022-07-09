@@ -11,5 +11,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseRoleDto {
-	private RoleName name;
+    private RoleName name;
 }

@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResponseRatingDto {
-	private Long userId;
-	private Long productId;
-	private int scores;
-	private String comment;
+    private Long userId;
+    private Long productId;
+    private int scores;
+    private String comment;
 }

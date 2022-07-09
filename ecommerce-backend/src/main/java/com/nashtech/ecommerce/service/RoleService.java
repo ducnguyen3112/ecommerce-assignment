@@ -5,6 +5,6 @@ import com.nashtech.ecommerce.enums.RoleName;
 
 public interface RoleService {
 
-	Role findByName(RoleName roleName);
+    Role findByName(RoleName roleName);
 
 }

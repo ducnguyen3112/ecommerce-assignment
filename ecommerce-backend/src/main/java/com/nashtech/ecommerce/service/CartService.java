@@ -5,10 +5,10 @@ import com.nashtech.ecommerce.dto.response.ResponseCartDto;
 
 public interface CartService {
 
-	ResponseCartDto findCartDtoById(Long id);
+    ResponseCartDto findCartById(Long id);
 
-	ResponseCartDto createCart(RequestCartDto cartDto);
+    ResponseCartDto createCart(RequestCartDto cartDto);
 
-	ResponseCartDto updateCart(RequestCartDto cartDto);
+    ResponseCartDto updateCart(RequestCartDto cartDto);
 
 }
