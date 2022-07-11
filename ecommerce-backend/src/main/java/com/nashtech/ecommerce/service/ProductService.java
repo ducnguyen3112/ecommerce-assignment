@@ -20,5 +20,5 @@ public interface ProductService {
     ResponseListProduct findAllProduct(String productName, ProductStatus status, int page,
                                        int size);
 
-
+    ResponseListProduct findFeaturedProducts();
 }

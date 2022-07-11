@@ -116,5 +116,18 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseMessageDto(HttpStatus.OK,
                 "Deleted product with id= " + id, LocalDateTime.now());
     }
+    @Override
+    public ResponseListProduct findFeaturedProducts(){
+        List<Product> products=productRepository.findTop8ByOrderByCreatedAtDesc();
+        List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
+                new TypeToken<List<ResponseProductDto>>() {
+                }.getType());
+        return ResponseListProduct.builder().totalProduct(Long.valueOf(responseProductDtos.size()))
+                .currentPage(1)
+                .perPage(responseProductDtos.size())
+                .productDtos(responseProductDtos)
+                .lastPage(1)
+                .build();
+    }
 
 }

@@ -1,11 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 
-Login.propTypes = {
-    
-};
 
-function Login(props) {
+function Login() {
     return (
         <form>
             <h3>Sign In</h3>

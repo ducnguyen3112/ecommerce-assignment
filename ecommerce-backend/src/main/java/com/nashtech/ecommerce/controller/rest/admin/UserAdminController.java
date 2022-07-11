@@ -5,6 +5,8 @@ import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/users")
+//@Tag(name = 
+//        description = "Allow to display and edit user data")
 public class UserAdminController {
 
     private final UserService userService;
@@ -25,6 +29,8 @@ public class UserAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Find all users in admin site",
+            tags = {"Administrator"})
     public ResponseListUser findAllUser(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam("status") Optional<Integer> statusOptional,
@@ -38,12 +44,16 @@ public class UserAdminController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Find a user by id in admin site",
+            tags = {"Administrator"})
     public ResponseUserDto findUserDtoById(@PathVariable Long id) {
         return userService.findUserById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a new user",
+            tags = {"Administrator"})
     public ResponseMessageDto signUp(@Valid @RequestBody RequestUserDto requestUserDto) {
         if (userService.existByEmail(requestUserDto.getEmail())) {
             return new ResponseMessageDto(HttpStatus.OK, "Email is existed",
@@ -61,12 +71,16 @@ public class UserAdminController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseUserDto updateUserDto(@Valid @RequestBody RequestUserDto userDto) {
+    @Operation(summary = "Edit information of user",
+            tags = {"Administrator"})
+    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto) {
         return userService.updateUser(userDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Inactive user",
+            tags = {"Administrator"})
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }

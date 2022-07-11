@@ -11,6 +11,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +31,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<ResponseCategoryDto> findAllCategory() {
         List<Category> categories = categoryRepository.findAll();
-        return modelMapper.map(categories, new TypeToken<List<ResponseCategoryDto>>() {
+        List<Category> reponseCategories=new ArrayList<>();
+        categories.forEach(category -> {
+            if (!category.getChildCategories().isEmpty()){
+                reponseCategories.add(category);
+            }
+        });
+        return modelMapper.map(reponseCategories, new TypeToken<List<ResponseCategoryDto>>() {
         }.getType());
     }
 

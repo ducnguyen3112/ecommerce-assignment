@@ -1,9 +1,10 @@
 
 .section-body{
     display: flex;
+    margin-top: 60px;
 }
 .accordion{
-    margin-right: 60px;
+    margin-top: 30px;
 }
 .pagination{
     display: flex;
@@ -13,4 +14,7 @@
 .product-card{
     width: 300px;
     margin-bottom: 10px;
+}
+.product-center{
+    justify-content: center;
 }

@@ -2,6 +2,8 @@ package com.nashtech.ecommerce.controller.rest.admin;
 
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.service.CloudDinaryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ public class FileUpLoadAdminController {
     private CloudDinaryService cloudDinaryService;
 
     @PostMapping("/cloudinary")
+    @Operation(summary = "Upload photos to Cloudinary",tags = {"Administrator","User"})
     public ResponseEntity<ResponseMessageDto> upLoad(
             @NotEmpty @RequestParam("file") MultipartFile multipartFile)
             throws IOException {

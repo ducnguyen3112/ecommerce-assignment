@@ -19,8 +19,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/products")
-@Tag(name = "Products data Management",
-        description = "Allow to display and edit product data")
+//@Tag(name = 
+//        description = "Allow to display and edit product data")
 public class ProductAdminController {
     private final ProductService productService;
     @Autowired
@@ -30,7 +30,8 @@ public class ProductAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all products and paginate including out-of-stock products")
+    @Operation(summary = "Get all products and paginate including out-of-stock products",
+    tags = {"Administrator"})
     public ResponseListProduct findAllProduct(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "status", required = false) String status,
@@ -55,13 +56,15 @@ public class ProductAdminController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Show product details")
+    @Operation(summary = "Show product details",
+            tags = {"Administrator"})
     public ResponseProductDto findProductDtoById(@PathVariable Long id) {
         return productService.findProductById(id);
     }
 
     @PostMapping
-    @Operation(summary = "Create a new product")
+    @Operation(summary = "Create a new product",
+            tags = {"Administrator"})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseProductDto createProductDto(
             @Valid @RequestBody RequestCreateProductDto productDto) {
@@ -70,7 +73,8 @@ public class ProductAdminController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Edit an existing product")
+    @Operation(summary = "Edit an existing product",
+            tags = {"Administrator"})
     public ResponseProductDto updateProductDto(
             @Valid @RequestBody RequestProductDto productDto, @PathVariable Long id) {
         return productService.updateProduct(productDto, id);
@@ -78,7 +82,8 @@ public class ProductAdminController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Change status of product stocking of out-of-stock")
+    @Operation(summary = "Change status of product stocking of out-of-stock",
+            tags = {"Administrator"})
     public ResponseMessageDto deleteProduct(@PathVariable Long id) {
         return productService.deleteProduct(id);
     }

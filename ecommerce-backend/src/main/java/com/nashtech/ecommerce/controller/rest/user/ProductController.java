@@ -10,14 +10,13 @@ import com.nashtech.ecommerce.service.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-@Tag(name = "product data for users ",
-        description = "display and allow  rating products")
 public class ProductController {
 
     private final ProductService productService;
@@ -29,7 +28,8 @@ public class ProductController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all products are stocking and paginate")
+    @Operation(summary = "Get all products are stocking and paginate",
+            tags = {"User"})
     public ResponseListProduct findAllProduct(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam("status") Optional<ProductStatus> statusOptional,
@@ -41,17 +41,24 @@ public class ProductController {
         return productService.findAllProduct(name, status, currentPage, pageSize);
     }
 
-    @Operation(summary = "Get a product with id")
     @GetMapping("/{id}")
-    public ResponseProductDto findProductDtoById(@PathVariable Long id) {
+    @Operation(summary = "Get a product by id",
+            tags = {"User"})
+    public ResponseProductDto findProductById(@PathVariable Long id) {
         return productService.findProductById(id);
     }
 
     @PostMapping("/{id}/rating")
-    @Operation(summary = "Rating product")
+    @Operation(summary = "Rating products",
+            tags = {"User"})
     public ResponseRatingDto addRatingForProduct(@PathVariable Long id,
                                                  @RequestBody RequestRatingDto requestRatingDto) {
         return ratingService.addRating(requestRatingDto, id);
     }
-
+    @GetMapping("/featured-products")
+    @Operation(summary = "Featured products",
+            tags = {"User"})
+    public ResponseListProduct findFeaturedProducts(){
+        return productService.findFeaturedProducts();
+    }
 }
