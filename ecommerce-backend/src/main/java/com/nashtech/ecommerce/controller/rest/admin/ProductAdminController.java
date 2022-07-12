@@ -84,7 +84,7 @@ public class ProductAdminController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Change status of product stocking of out-of-stock",
             tags = {"Administrator"})
-    public ResponseMessageDto deleteProduct(@PathVariable Long id) {
+    public ResponseProductDto deleteProduct(@PathVariable Long id) {
         return productService.deleteProduct(id);
     }
 }

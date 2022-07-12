@@ -3,7 +3,6 @@ package com.nashtech.ecommerce.service.impl;
 import com.nashtech.ecommerce.dto.request.RequestCreateProductDto;
 import com.nashtech.ecommerce.dto.request.RequestProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
-import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.entity.Product;
 import com.nashtech.ecommerce.enums.ProductStatus;
@@ -17,20 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private ModelMapper modelMapper;
-    private RatingRepository ratingRepository;
+    private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
+    private final RatingRepository ratingRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository,
@@ -44,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseListProduct findAllProduct(String productName, ProductStatus status, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Product> productPage = null;
+        Page<Product> productPage;
         if (status == null) {
             if (StringUtils.hasText(productName)) {
                 productPage = productRepository.findByProductNameContaining(productName, pageable);
@@ -62,9 +59,7 @@ public class ProductServiceImpl implements ProductService {
         List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
                 new TypeToken<List<ResponseProductDto>>() {
                 }.getType());
-        responseProductDtos.forEach(responseProductDto -> {
-            responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f));
-        });
+        responseProductDtos.forEach(responseProductDto -> responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f)));
 
         return ResponseListProduct.builder().totalProduct(productPage.getTotalElements())
                 .perPage(productPage.getNumberOfElements())
@@ -109,12 +104,11 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseMessageDto deleteProduct(Long id) {
+    public ResponseProductDto deleteProduct(Long id) {
         Product product= productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Did not find product with id = " + id));
         product.setStatus(ProductStatus.OUT_OF_STOCK);
-        return new ResponseMessageDto(HttpStatus.OK,
-                "Deleted product with id= " + id, LocalDateTime.now());
+        return modelMapper.map(product,ResponseProductDto.class);
     }
     @Override
     public ResponseListProduct findFeaturedProducts(){
@@ -122,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
         List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
                 new TypeToken<List<ResponseProductDto>>() {
                 }.getType());
-        return ResponseListProduct.builder().totalProduct(Long.valueOf(responseProductDtos.size()))
+        return ResponseListProduct.builder().totalProduct((long) responseProductDtos.size())
                 .currentPage(1)
                 .perPage(responseProductDtos.size())
                 .productDtos(responseProductDtos)

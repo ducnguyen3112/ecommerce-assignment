@@ -5,18 +5,18 @@ import com.nashtech.ecommerce.dto.request.RequestUserDto;
 import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.security.UserDetailsImpl;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
 
     ResponseUserDto findUserById(Long id);
 
-    ResponseEntity deleteUser(Long id);
+    ResponseUserDto updateUser(RequestUserDto userDto, Long id);
+
+    ResponseUserDto deleteUser(Long id);
 
     ResponseUserDto findUserDtoByEmail(String email);
 
-    ResponseUserDto updateUser(RequestUserDto userDto);
 
     public UserDetailsImpl loadUserByUsername(String email)
             throws UsernameNotFoundException;

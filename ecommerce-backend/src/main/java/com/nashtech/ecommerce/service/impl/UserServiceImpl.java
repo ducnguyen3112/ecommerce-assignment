@@ -3,7 +3,6 @@ package com.nashtech.ecommerce.service.impl;
 import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
 import com.nashtech.ecommerce.dto.request.RequestUserDto;
 import com.nashtech.ecommerce.dto.response.ResponseListUser;
-import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.entity.Role;
 import com.nashtech.ecommerce.entity.User;
@@ -20,15 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -133,24 +129,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public ResponseUserDto updateUser(RequestUserDto userDto) {
-        User user = userRepository.findById(userDto.getId())
+    public ResponseUserDto updateUser(RequestUserDto userDto, Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Did not find user has email = " + userDto.getId()));
+                        "Did not find user has id = " + id));
         modelMapper.map(userDto, user);
         user = userRepository.save(user);
         return modelMapper.map(user, ResponseUserDto.class);
     }
 
     @Override
-    public ResponseEntity<Object> deleteUser(Long id) {
+    public ResponseUserDto deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Did not find user with id = " + id));
         user.setStatus(UserStatus.INACTIVE);
-        userRepository.save(user);
-        ResponseMessageDto responseMessageDto = new ResponseMessageDto(HttpStatus.OK, "Deleted user with id= " + id,
-                LocalDateTime.now());
-        return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
+        user = userRepository.save(user);
+        return modelMapper.map(user, ResponseUserDto.class);
     }
 
     @Override

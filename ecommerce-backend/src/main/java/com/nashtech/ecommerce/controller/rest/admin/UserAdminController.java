@@ -6,7 +6,7 @@ import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,19 +69,19 @@ public class UserAdminController {
 
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Edit information of user",
             tags = {"Administrator"})
-    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto) {
-        return userService.updateUser(userDto);
+    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto,@PathVariable Long id) {
+        return userService.updateUser(userDto,id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Inactive user",
             tags = {"Administrator"})
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+    public ResponseUserDto deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }
 

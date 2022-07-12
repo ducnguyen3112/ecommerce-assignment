@@ -16,7 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestUserDto {
-    private Long id;
     @NotEmpty
     private String firstName;
     @NotEmpty
