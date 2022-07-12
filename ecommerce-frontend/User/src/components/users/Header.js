@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSelector } from "react-redux";
 
-function Header(props) {
+function Header() {
+    const userLogin = useSelector((state) => state.auth)
+    const  {error, loading, userInfo} = userLogin
     return (
         <header className="bg-dark py-5">
             <div className="container px-4 px-lg-5 my-5">

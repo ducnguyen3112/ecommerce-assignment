@@ -6,7 +6,7 @@ function ProductCard() {
 
     useEffect(() => {
         const getProduct = async () => {
-            const response = await axios.get("http://localhost:8080/api/products/featured-products")
+            const response = await axios.get("https://ecommerce-nashtech-assignment.herokuapp.com/api/products/featured-products")
             setProducts(response.data.data)
         }
         getProduct()
@@ -14,10 +14,10 @@ function ProductCard() {
     return (
         <div className="container section-body ">
             <div className="row product-center">
-                {products.map((product) => {
-                    return <div className=" product-card ">
+                {products.map((product, index) => {
+                    return <div className=" product-card " key={index}>
                         <div className="card h-100">
-                            <img className="card-img-top" src={product.image} alt="..."/>
+                            <img className="card-img-top" src={product.image} alt={index}/>
                             <div className="card-body p-4">
                                 <div className="text-center">
                                     <h6 className="fw-bolder">{product.productName}</h6>
@@ -31,7 +31,7 @@ function ProductCard() {
                                 </div>
                             </div>
                             <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">Add to
+                                <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#!">Add to
                                     cart</a>
                                 </div>
                             </div>
