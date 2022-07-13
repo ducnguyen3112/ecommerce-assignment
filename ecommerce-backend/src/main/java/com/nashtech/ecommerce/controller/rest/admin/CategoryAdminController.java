@@ -44,12 +44,12 @@ public class CategoryAdminController {
         return categoryService.createCategory(categoryDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Edit a category",
             tags = {"Administrator"})
     public ResponseCategoryDto updateCategoryDto(
-            @Valid @RequestBody RequestCategoryDto categoryDto) {
-        return categoryService.updateCategory(categoryDto);
+            @Valid @RequestBody RequestCategoryDto categoryDto,@PathVariable Long id) {
+        return categoryService.updateCategory(categoryDto,id);
     }
 }

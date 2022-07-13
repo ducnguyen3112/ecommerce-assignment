@@ -31,8 +31,6 @@ public class RatingServiceImpl implements RatingService {
         rating.setComment(requestRatingDto.getComment());
         rating.setRatingId(ratingId);
         rating = ratingRepository.save(rating);
-        return new ResponseRatingDto(rating.getRatingId().getUserId(),
-                rating.getRatingId().getProductId(), rating.getScores(),
-                rating.getComment());
+        return modelMapper.map(rating,ResponseRatingDto.class);
     }
 }

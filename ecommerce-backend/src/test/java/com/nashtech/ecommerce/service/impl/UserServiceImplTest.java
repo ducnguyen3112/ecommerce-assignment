@@ -83,6 +83,7 @@ public class UserServiceImplTest {
         when(userRepository.findById(1L)).thenReturn(userOptional);
         user = userOptional.get();
         modelMapper.map(userDto, user);
+        verify(modelMapper).map(userDto,user);
         when(userRepository.save(user)).thenReturn(user);
         ResponseUserDto expectedUserDto = modelMapper.map(user, ResponseUserDto.class);
         ResponseUserDto actualUserDto = userServiceImpl.updateUser(userDto, 1L);

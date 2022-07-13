@@ -13,6 +13,5 @@ public interface CategoryService {
 
     ResponseCategoryDto createCategory(RequestCategoryDto categoryDto);
 
-    ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto);
-
+    ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto, Long id);
 }

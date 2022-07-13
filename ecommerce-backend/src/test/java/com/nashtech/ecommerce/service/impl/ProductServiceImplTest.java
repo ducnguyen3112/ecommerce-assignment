@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,14 @@ public class ProductServiceImplTest {
     @Test
     public void createProduct_WhenRequestValid_Expect_ReturnProductAfterSave() {
         RequestCreateProductDto requestCreateProductDto = mock(RequestCreateProductDto.class);
+        requestCreateProductDto.setStatus(ProductStatus.STOCKING);
+        verify(requestCreateProductDto).setStatus(ProductStatus.STOCKING);
+        Date date=mock(Date.class);
         Product product = mock(Product.class);
+        product.setCreatedAt(date);
+        product.setModifiedAt(date);
+        verify(product).setCreatedAt(date);
+        verify(product).setModifiedAt(date);
         when(modelMapper.map(requestCreateProductDto, Product.class)).thenReturn(product);
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto  expectedProductDto=modelMapper.map(product,ResponseProductDto.class);
@@ -63,10 +71,14 @@ public class ProductServiceImplTest {
     public void updateProduct_WhenRequestValid_Expect_ReturnProductAfterUpdated(){
         Product product=mock(Product.class);
         Optional<Product> productOptional=Optional.of(product);
+        Date date=mock(Date.class);
         RequestProductDto requestProductDto=mock(RequestProductDto.class);
         when(productRepository.findById(1L)).thenReturn(productOptional);
         product=productOptional.get();
         modelMapper.map(requestProductDto,product);
+        product.setModifiedAt(date);
+        verify(product).setModifiedAt(date
+        );
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto expectedProductDto=modelMapper.map(product,ResponseProductDto.class);
         ResponseProductDto actualProductDto= productServiceImpl.updateProduct(requestProductDto,1L);

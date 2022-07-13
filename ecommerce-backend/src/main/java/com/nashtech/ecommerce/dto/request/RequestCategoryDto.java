@@ -9,8 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RequestCategoryDto {
 
-    private Long id;
-
     private String categoryName;
 
     private String description;
