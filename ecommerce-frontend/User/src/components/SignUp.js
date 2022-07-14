@@ -35,7 +35,7 @@ function Signup() {
         dispatch(action.register(firstName, lastName, email, phoneNumber, password));
     };
     return (
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} className={'login-form'}>
             <h3>Sign Up</h3>
             {error &&
                 <Alert variant={'danger'}>
@@ -103,9 +103,6 @@ function Signup() {
                     Sign Up
                 </button>
             </div>
-            <p className="forgot-password text-right">
-                Already registered <Link  to={redirect ? `/Sign-In?redirect=${redirect}` : "/Sign-In"}>sign in?</Link>
-            </p>
         </form>
     );
 }

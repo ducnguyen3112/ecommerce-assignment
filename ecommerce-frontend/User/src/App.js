@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/users/Home";
 import Shop from "./components/users/Shop";
 import ProductDetail from "./components/users/ProductDetail";
+import Login from "./components/users/Login";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route path="/shop" element={<Shop/>}/>
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
             </Routes>
             <Footer/>

@@ -33,7 +33,7 @@ const SignIn = () => {
         dispatch(action.login(email, password));
     };
     return (
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} className={'login-form'}>
             <h3>Sign In</h3>
             {error &&
                 <Alert variant={'danger'}>
@@ -70,10 +70,6 @@ const SignIn = () => {
                     Submit
                 </button>
             </div>
-            <p className="forgot-password text-right">
-                Do not have an account? <Link to={redirect ? `/Sign-Up?redirect=${redirect}` : "/Sign-Up"}>Sign
-                up</Link>
-            </p>
         </form>
     );
 }

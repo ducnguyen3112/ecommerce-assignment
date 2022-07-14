@@ -18,3 +18,12 @@
 .product-center{
     justify-content: center;
 }
+.login-container{
+    display: flex;
+    margin-top: 100px;
+    justify-content: space-evenly;
+    height: 600px;
+}
+.login-form{
+    width: 30%;
+}
