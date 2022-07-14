@@ -9,7 +9,7 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +41,7 @@ public class User {
     @Column(name = "password")
     private String password;
     @Column(name = "registered_at")
-    private Date registeredAt;
+    private LocalDateTime registeredAt;
     @Column(name = "avatar")
     private String avatar;
     @Column(name = "address")

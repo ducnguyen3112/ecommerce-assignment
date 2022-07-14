@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -59,8 +59,6 @@ public class ProductServiceImpl implements ProductService {
         List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
                 new TypeToken<List<ResponseProductDto>>() {
                 }.getType());
-        responseProductDtos.forEach(responseProductDto -> responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f)));
-
         return ResponseListProduct.builder().totalProduct(productPage.getTotalElements())
                 .perPage(productPage.getNumberOfElements())
                 .currentPage(productPage.getNumber() + 1)
@@ -75,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find product with id = " + id));
         ResponseProductDto responseProductDto = modelMapper.map(product, ResponseProductDto.class);
-        responseProductDto.setAvgScores(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f));
+        responseProductDto.setAvgRating(ratingRepository.findAVGRatingOfProduct(responseProductDto.getId()).orElse(0f));
         return responseProductDto;
     }
 
@@ -83,8 +81,9 @@ public class ProductServiceImpl implements ProductService {
     public ResponseProductDto createProduct(RequestCreateProductDto productDto) {
         productDto.setStatus(ProductStatus.STOCKING);
         Product product = new Product();
-        product.setCreatedAt(new Date());
-        product.setModifiedAt(new Date());
+        product.setCreatedAt(LocalDateTime.now());
+        product.setModifiedAt(LocalDateTime.now());
+        product.setAvgRating(0F);
         productRepository
                 .save(modelMapper.map(productDto, Product.class));
 
@@ -97,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find product has id = " + id));
         modelMapper.map(productDto, product);
-        product.setModifiedAt(new Date());
+        product.setModifiedAt(LocalDateTime.now());
         product = productRepository.save(product);
         return modelMapper.map(product, ResponseProductDto.class);
     }
@@ -105,14 +104,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseProductDto deleteProduct(Long id) {
-        Product product= productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Did not find product with id = " + id));
         product.setStatus(ProductStatus.OUT_OF_STOCK);
-        return modelMapper.map(product,ResponseProductDto.class);
+        return modelMapper.map(product, ResponseProductDto.class);
     }
+
     @Override
-    public ResponseListProduct findFeaturedProducts(){
-        List<Product> products=productRepository.findTop8ByOrderByCreatedAtDesc();
+    public ResponseListProduct findFeaturedProducts() {
+        List<Product> products = productRepository.findTop8ByOrderByCreatedAtDesc();
         List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
                 new TypeToken<List<ResponseProductDto>>() {
                 }.getType());

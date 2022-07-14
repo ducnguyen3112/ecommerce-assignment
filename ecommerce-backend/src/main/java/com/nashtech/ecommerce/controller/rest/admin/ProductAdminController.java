@@ -3,12 +3,10 @@ package com.nashtech.ecommerce.controller.rest.admin;
 import com.nashtech.ecommerce.dto.request.RequestCreateProductDto;
 import com.nashtech.ecommerce.dto.request.RequestProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
-import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.enums.ProductStatus;
 import com.nashtech.ecommerce.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.hibernate.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +21,7 @@ import java.util.Optional;
 //        description = "Allow to display and edit product data")
 public class ProductAdminController {
     private final ProductService productService;
+
     @Autowired
     public ProductAdminController(ProductService productService) {
         this.productService = productService;
@@ -31,7 +30,7 @@ public class ProductAdminController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all products and paginate including out-of-stock products",
-    tags = {"Administrator"})
+            tags = {"Administrator"})
     public ResponseListProduct findAllProduct(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "status", required = false) String status,

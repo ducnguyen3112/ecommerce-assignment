@@ -6,9 +6,7 @@ import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -47,7 +45,7 @@ public class UserAdminController {
     @Operation(summary = "Find a user by id in admin site",
             tags = {"Administrator"})
     public ResponseUserDto findUserDtoById(@PathVariable Long id) {
-        return userService.findUserById(id);
+        return userService.getUser(id);
     }
 
     @PostMapping
@@ -55,11 +53,11 @@ public class UserAdminController {
     @Operation(summary = "Create a new user",
             tags = {"Administrator"})
     public ResponseMessageDto signUp(@Valid @RequestBody RequestUserDto requestUserDto) {
-        if (userService.existByEmail(requestUserDto.getEmail())) {
+        if (userService.isEmailExist(requestUserDto.getEmail())) {
             return new ResponseMessageDto(HttpStatus.OK, "Email is existed",
                     LocalDateTime.now());
         }
-        if (userService.existByPhoneNumber(requestUserDto.getPhoneNumber())) {
+        if (userService.isPhoneNumberExist(requestUserDto.getPhoneNumber())) {
             return new ResponseMessageDto(HttpStatus.OK, "Phone number is existed",
                     LocalDateTime.now());
         }
@@ -73,8 +71,8 @@ public class UserAdminController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Edit information of user",
             tags = {"Administrator"})
-    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto,@PathVariable Long id) {
-        return userService.updateUser(userDto,id);
+    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto, @PathVariable Long id) {
+        return userService.updateUser(userDto, id);
     }
 
     @DeleteMapping("/{id}")

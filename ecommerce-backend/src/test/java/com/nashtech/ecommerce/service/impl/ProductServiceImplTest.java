@@ -12,21 +12,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class ProductServiceImplTest {
+    Product product;
+    Optional<Product> productOptional;
     private ProductRepository productRepository;
     private ModelMapper modelMapper;
     private ProductServiceImpl productServiceImpl;
 
     @BeforeEach
     void setUp() {
-
+        product = mock(Product.class);
+        productOptional = Optional.of(product);
         productRepository = mock(ProductRepository.class);
         RatingRepository ratingRepository = mock(RatingRepository.class);
         modelMapper = mock(ModelMapper.class);
@@ -36,67 +40,55 @@ public class ProductServiceImplTest {
     @Test
     public void createProduct_WhenRequestValid_Expect_ReturnProductAfterSave() {
         RequestCreateProductDto requestCreateProductDto = mock(RequestCreateProductDto.class);
-        requestCreateProductDto.setStatus(ProductStatus.STOCKING);
-        verify(requestCreateProductDto).setStatus(ProductStatus.STOCKING);
-        Date date=mock(Date.class);
-        Product product = mock(Product.class);
-        product.setCreatedAt(date);
-        product.setModifiedAt(date);
-        verify(product).setCreatedAt(date);
-        verify(product).setModifiedAt(date);
         when(modelMapper.map(requestCreateProductDto, Product.class)).thenReturn(product);
         when(productRepository.save(product)).thenReturn(product);
-        ResponseProductDto  expectedProductDto=modelMapper.map(product,ResponseProductDto.class);
-        ResponseProductDto actualProductDto= productServiceImpl.createProduct(requestCreateProductDto);
+        ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
+        ResponseProductDto actualProductDto = productServiceImpl.createProduct(requestCreateProductDto);
+        verify(requestCreateProductDto).setStatus(ProductStatus.STOCKING);
+        verify(product).setCreatedAt(LocalDateTime.now());
+        verify(product).setModifiedAt(LocalDateTime.now());
+        assertThat(actualProductDto).isEqualTo(expectedProductDto);
+    }
 
-        assertEquals(expectedProductDto,actualProductDto);
-    }
     @Test
-    public void findProductById_WhenRequestValid_Expect_ReturnProduct(){
-        Product product=mock(Product.class);
-        Optional<Product> productOptional=Optional.of(product);
-        ResponseProductDto productDto=mock(ResponseProductDto.class);
+    public void findProductById_WhenRequestValid_Expect_ReturnProduct() {
+
+        ResponseProductDto expected = mock(ResponseProductDto.class);
         when(productRepository.findById(1L)).thenReturn(productOptional);
-        when(modelMapper.map(productOptional.get(),ResponseProductDto.class)).thenReturn(productDto);
-        assertEquals(productDto, productServiceImpl.findProductById(1L));
+        when(modelMapper.map(productOptional.get(), ResponseProductDto.class)).thenReturn(expected);
+        ResponseProductDto actual = productServiceImpl.findProductById(1L);
+        assertThat(actual).isEqualTo(expected);
     }
+
     @Test
-    public void findUserById_WhenIdNotFound_Expect_throwResourceNotFoundException(){
+    public void findUserById_WhenIdNotFound_Expect_throwResourceNotFoundException() {
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class,() -> productServiceImpl.findProductById(1L),"Did not find product has id = " + 1L);
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> productServiceImpl.findProductById(1L));
+        assertThat(exception.getMessage()).isEqualTo("Did not find product has id = " + 1L);
     }
 
 
     @Test
-    public void updateProduct_WhenRequestValid_Expect_ReturnProductAfterUpdated(){
-        Product product=mock(Product.class);
-        Optional<Product> productOptional=Optional.of(product);
-        Date date=mock(Date.class);
-        RequestProductDto requestProductDto=mock(RequestProductDto.class);
+    public void updateProduct_WhenRequestValid_Expect_ReturnProductAfterUpdated() {
+        RequestProductDto requestProductDto = mock(RequestProductDto.class);
         when(productRepository.findById(1L)).thenReturn(productOptional);
-        product=productOptional.get();
-        modelMapper.map(requestProductDto,product);
-        product.setModifiedAt(date);
-        verify(product).setModifiedAt(date
-        );
+        modelMapper.map(requestProductDto, product);
         when(productRepository.save(product)).thenReturn(product);
-        ResponseProductDto expectedProductDto=modelMapper.map(product,ResponseProductDto.class);
-        ResponseProductDto actualProductDto= productServiceImpl.updateProduct(requestProductDto,1L);
-        assertEquals(expectedProductDto,actualProductDto);
+        ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
+        ResponseProductDto actualProductDto = productServiceImpl.updateProduct(requestProductDto, 1L);
+//        verify(product).setModifiedAt(LocalDateTime.now());
+        assertEquals(expectedProductDto, actualProductDto);
 
     }
+
     @Test
-    public void deleteProduct_WhenRequestValid_Expect_ReturnResponseProduct(){
-        Product product=mock(Product.class);
-        Optional<Product> productOptional=Optional.of(product);
+    public void deleteProduct_WhenRequestValid_Expect_ReturnResponseProduct() {
         when(productRepository.findById(1L)).thenReturn(productOptional);
-        product=productOptional.get();
-        product.setStatus(ProductStatus.OUT_OF_STOCK);
+        ResponseProductDto expectedProduct = mock(ResponseProductDto.class);
+        when(modelMapper.map(product, ResponseProductDto.class)).thenReturn(expectedProduct);
+        ResponseProductDto actualProduct = productServiceImpl.deleteProduct(1L);
         verify(product).setStatus(ProductStatus.OUT_OF_STOCK);
-        ResponseProductDto expectedProduct=mock(ResponseProductDto.class);
-        when(modelMapper.map(product,ResponseProductDto.class)).thenReturn(expectedProduct);
-        ResponseProductDto actualProduct= productServiceImpl.deleteProduct(1L);
-        assertEquals(expectedProduct,actualProduct);
+        assertThat(actualProduct).isEqualTo(expectedProduct);
 
     }
 }

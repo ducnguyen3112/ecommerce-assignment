@@ -32,7 +32,7 @@ public class CategoryAdminController {
     @Operation(summary = "Find a category by id in admin site",
             tags = {"Administrator"})
     public ResponseCategoryDto findCategoryDtoById(@PathVariable Long id) {
-        return categoryService.findCategoryById(id);
+        return categoryService.findCategory(id);
     }
 
     @PostMapping
@@ -49,7 +49,7 @@ public class CategoryAdminController {
     @Operation(summary = "Edit a category",
             tags = {"Administrator"})
     public ResponseCategoryDto updateCategoryDto(
-            @Valid @RequestBody RequestCategoryDto categoryDto,@PathVariable Long id) {
-        return categoryService.updateCategory(categoryDto,id);
+            @Valid @RequestBody RequestCategoryDto categoryDto, @PathVariable Long id) {
+        return categoryService.updateCategory(categoryDto, id);
     }
 }

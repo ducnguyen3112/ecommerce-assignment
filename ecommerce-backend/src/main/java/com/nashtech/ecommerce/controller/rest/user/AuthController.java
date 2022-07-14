@@ -9,7 +9,6 @@ import com.nashtech.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.ecommerce.service.RoleService;
 import com.nashtech.ecommerce.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +45,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     @Operation(summary = "Log in to the website",
-    tags = {"User"})
+            tags = {"User"})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> signIn(@Valid @RequestBody RequestSignInDto signInDto) {
         Authentication authentication = authenticationManager.authenticate(
@@ -65,11 +64,11 @@ public class AuthController {
     @Operation(summary = "User registration",
             tags = {"User"})
     public ResponseMessageDto signUp(@Valid @RequestBody RequestSignUpDto signUpDto) {
-        if (userService.existByEmail(signUpDto.getEmail())) {
+        if (userService.isEmailExist(signUpDto.getEmail())) {
             return new ResponseMessageDto(HttpStatus.OK, "Email is existed",
                     LocalDateTime.now());
         }
-        if (userService.existByPhoneNumber(signUpDto.getPhoneNumber())) {
+        if (userService.isPhoneNumberExist(signUpDto.getPhoneNumber())) {
             return new ResponseMessageDto(HttpStatus.OK, "Phone number is existed",
                     LocalDateTime.now());
         }

@@ -31,9 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<ResponseCategoryDto> findAllCategory() {
         List<Category> categories = categoryRepository.findAll();
-        List<Category> reponseCategories=new ArrayList<>();
+        List<Category> reponseCategories = new ArrayList<>();
         categories.forEach(category -> {
-            if (!category.getChildCategories().isEmpty()){
+            if (!category.getChildCategories().isEmpty()) {
                 reponseCategories.add(category);
             }
         });
@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseCategoryDto findCategoryById(Long id) {
+    public ResponseCategoryDto findCategory(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find category with id = " + id));
@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto,Long id) {
+    public ResponseCategoryDto updateCategory(RequestCategoryDto categoryDto, Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find category with id = " + id));

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -29,11 +30,11 @@ public class ResponseProductDto {
     private Date createdAt;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date modifiedAt;
+    private LocalDateTime modifiedAt;
 
     private ProductStatus status;
 
     private String image;
 
-    private float avgScores;
+    private float avgRating;
 }

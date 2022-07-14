@@ -7,7 +7,6 @@ import com.nashtech.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.ecommerce.service.RoleService;
 import com.nashtech.ecommerce.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,8 +42,8 @@ public class AuthAdminController {
 
     @PostMapping("/signin")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Login in to management website",tags = {"Administrator"},
-    description = "allow administrators to login to the management site")
+    @Operation(summary = "Login in to management website", tags = {"Administrator"},
+            description = "allow administrators to login to the management site")
     public ResponseEntity<?> signIn(@Valid @RequestBody RequestSignInDto signInDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInDto.getEmail(),

@@ -25,7 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public ResponseUserDto findUserById(Long id) {
+    public ResponseUserDto getUser(Long id) {
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Did not find user has id = " + id));
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public ResponseUserDto createUser(RequestUserDto signUpDto) {
         signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         User user = modelMapper.map(signUpDto, User.class);
-        user.setRegisteredAt(new Date());
+        user.setRegisteredAt(LocalDateTime.now());
         user.setStatus(UserStatus.ACTIVE);
         Set<String> strRoles = signUpDto.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -119,9 +119,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public ResponseUserDto signUp(RequestSignUpDto signUpDto) {
         signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         User user = modelMapper.map(signUpDto, User.class);
-        user.setRegisteredAt(new Date());
+        user.setRegisteredAt(LocalDateTime.now());
         user.setStatus(UserStatus.ACTIVE);
-
         Set<Role> roles = new HashSet<>();
         roles.add(new Role((long) RoleName.ROLE_USER.getValue(), RoleName.ROLE_USER));
         user.setRoles(roles);
@@ -148,7 +147,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public ResponseUserDto findUserDtoByEmail(String email) {
+    public ResponseUserDto getUser(String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -157,12 +156,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean existByEmail(String email) {
+    public boolean isEmailExist(String email) {
         return userRepository.existsByEmail(email);
     }
 
     @Override
-    public boolean existByPhoneNumber(String phoneNumber) {
+    public boolean isPhoneNumberExist(String phoneNumber) {
         return userRepository.existsByPhoneNumber(phoneNumber);
     }
 }

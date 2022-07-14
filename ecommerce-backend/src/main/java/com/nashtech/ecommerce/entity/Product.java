@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -32,12 +32,14 @@ public class Product {
     @Column(name = "price")
     private Long price;
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "modified_at")
-    private Date modifiedAt;
+    private LocalDateTime modifiedAt;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProductStatus status;
+    @Column(name = "avg_rating")
+    private float avgRating;
     @Column(name = "image")
     private String image;
     @ManyToOne(cascade = CascadeType.ALL)

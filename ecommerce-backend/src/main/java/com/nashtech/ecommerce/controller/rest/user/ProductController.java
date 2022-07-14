@@ -8,9 +8,7 @@ import com.nashtech.ecommerce.enums.ProductStatus;
 import com.nashtech.ecommerce.service.ProductService;
 import com.nashtech.ecommerce.service.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,6 +19,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final RatingService ratingService;
+
     @Autowired
     public ProductController(ProductService productService, RatingService ratingService) {
         this.productService = productService;
@@ -55,10 +54,11 @@ public class ProductController {
                                                  @RequestBody RequestRatingDto requestRatingDto) {
         return ratingService.addRating(requestRatingDto, id);
     }
+
     @GetMapping("/featured-products")
     @Operation(summary = "Featured products",
             tags = {"User"})
-    public ResponseListProduct findFeaturedProducts(){
+    public ResponseListProduct findFeaturedProducts() {
         return productService.findFeaturedProducts();
     }
 }

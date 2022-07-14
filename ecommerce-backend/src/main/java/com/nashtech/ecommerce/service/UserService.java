@@ -9,21 +9,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
 
-    ResponseUserDto findUserById(Long id);
+    ResponseUserDto getUser(Long id);
 
     ResponseUserDto updateUser(RequestUserDto userDto, Long id);
 
     ResponseUserDto deleteUser(Long id);
 
-    ResponseUserDto findUserDtoByEmail(String email);
+    ResponseUserDto getUser(String email);
 
 
     public UserDetailsImpl loadUserByUsername(String email)
             throws UsernameNotFoundException;
 
-    boolean existByEmail(String email);
+    boolean isEmailExist(String email);
 
-    boolean existByPhoneNumber(String phoneNumber);
+    boolean isPhoneNumberExist(String phoneNumber);
 
     ResponseListUser findAllUser(String name, int status, int page, int size);
 

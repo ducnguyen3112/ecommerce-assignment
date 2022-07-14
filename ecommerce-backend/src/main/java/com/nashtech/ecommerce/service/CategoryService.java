@@ -9,7 +9,7 @@ public interface CategoryService {
 
     List<ResponseCategoryDto> findAllCategory();
 
-    ResponseCategoryDto findCategoryById(Long id);
+    ResponseCategoryDto findCategory(Long id);
 
     ResponseCategoryDto createCategory(RequestCategoryDto categoryDto);
 
