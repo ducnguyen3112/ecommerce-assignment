@@ -5,15 +5,9 @@ const action = {
   register: (firstName, lastName, email, phoneNumber, password) => async (dispatch) => {
     try {
       dispatch({ type: constants.USER_REGISTER_REQUEST });
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
       const data  = await axios.post(
         "https://ecommerce-nashtech-assignment.herokuapp.com/api/auth/signup",
         {firstName, lastName, email, phoneNumber, password},
-        config
       );
       // dispatch({ type: constants.USER_REGISTER_SUCCESS, payload: data});
       document.location.href = "/Sign-In"

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 import action from './../redux/actions/Auth';
 import selector from './../redux/selector/Auth';
@@ -9,7 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
 const SignIn = () => {
-    let navigate =  useNavigate();
+    let navigate = useNavigate();
     let location = useLocation();
     const dispatch = useDispatch();
 
@@ -17,10 +17,10 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
 
     const userLogin = useSelector(selector.userLogin)
-    
-    const  {error, loading, userInfo} = userLogin;
 
-    const redirect = location.search ? location.search.split("=")[1]:"/";
+    const {error, loading, userInfo} = userLogin;
+
+    const redirect = location.search ? location.search.split("=")[1] : "/";
 
     useEffect(() => {
         if (localStorage.getItem("userInfo")) {
@@ -35,13 +35,13 @@ const SignIn = () => {
     return (
         <form onSubmit={submitHandler}>
             <h3>Sign In</h3>
-            {error && 
+            {error &&
                 <Alert variant={'danger'}>
                     {error}
                 </Alert>
             }
-            {loading && 
-                <Spinner animation="border" role="status" style={{ textAlign: "center" }}>
+            {loading &&
+                <Spinner animation="border" role="status" style={{textAlign: "center"}}>
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             }
@@ -71,7 +71,8 @@ const SignIn = () => {
                 </button>
             </div>
             <p className="forgot-password text-right">
-                Do not have an account? <Link to={redirect ? `/Sign-Up?redirect=${redirect}` : "/Sign-Up"}>Sign up</Link>
+                Do not have an account? <Link to={redirect ? `/Sign-Up?redirect=${redirect}` : "/Sign-Up"}>Sign
+                up</Link>
             </p>
         </form>
     );

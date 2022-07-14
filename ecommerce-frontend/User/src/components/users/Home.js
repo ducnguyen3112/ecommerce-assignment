@@ -1,12 +1,12 @@
 import React from 'react';
-import ProductCard from "./ProductCard";
 import Header from "./Header";
+import ProductList from "./ProductList";
 
 function Home() {
     return (
         <>
             <Header/>
-                <ProductCard/>
+            <ProductList/>
         </>
     );
 }

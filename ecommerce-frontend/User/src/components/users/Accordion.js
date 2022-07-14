@@ -6,7 +6,7 @@ function Accordion(props) {
 
     useEffect(() => {
         const getCategories= async  () =>{
-            const response =await axios.get("http://localhost:8080/api/categories")
+            const response =await axios.get("https://ecommerce-nashtech-assignment.herokuapp.com/api/categories")
             console.log(response)
             setCategories(response.data)
         }

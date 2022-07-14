@@ -4,7 +4,7 @@ import Accordion from "./Accordion";
 
 function Shop(props) {
     return (
-        <div className="container section-body ">
+        <div className="container section-body">
             <Accordion />
             <ProductCard />
         </div>
