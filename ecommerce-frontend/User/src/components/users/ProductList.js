@@ -1,25 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react';
 
-import action from '../../redux/actions/Product';
+import Alert from 'react-bootstrap/Alert';
 import ProductCard from "./ProductCard";
 
-function ProductList() {
-    const dispatch = useDispatch();
-    const [products, setProducts] = useState([])
-
-    const productList = useSelector((state) => state.product);
-    const {loading, error, featuredProduct} = productList;
-
-    useEffect(() => {
-        dispatch(action.featuredProduct());
-    }, []);
-   console.log(products);
+function ProductList(props) {
     return (
-        <div>
-            {/*{featuredProduct.data.map((item, index) => (*/}
-            {/*    <ProductCard key={index} props={item}/>*/}
-            {/*))}*/}
+        <div className={'container product-container'}>
+            { props.error ? (
+                <Alert variant={'danger'}>
+                    {props.error}
+                </Alert>
+            ):(
+                <div className={props.center+' product-list'}>{props.data.map((item) => (
+                    <ProductCard
+                        key={item.id}
+                        isLoading={props.loading}
+                        productName={item.productName}
+                        image={item.image}
+                    />
+                ))}
+                </div>
+            )}
         </div>
     );
 }

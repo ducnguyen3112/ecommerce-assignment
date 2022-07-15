@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseListProduct findAllProduct(String productName, ProductStatus status, int page, int size) {
+    public ResponseListProduct getAllProduct(String productName, ProductStatus status, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> productPage;
         if (status == null) {
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseProductDto findProductById(Long id) {
+    public ResponseProductDto getProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find product with id = " + id));
@@ -79,14 +79,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseProductDto createProduct(RequestCreateProductDto productDto) {
-        productDto.setStatus(ProductStatus.STOCKING);
-        Product product = new Product();
+        Product product= modelMapper.map(productDto, Product.class);
         product.setCreatedAt(LocalDateTime.now());
         product.setModifiedAt(LocalDateTime.now());
         product.setAvgRating(0F);
-        productRepository
-                .save(modelMapper.map(productDto, Product.class));
-
+        product.setStatus(ProductStatus.STOCKING);
+        productRepository.save(product);
         return modelMapper.map(product, ResponseProductDto.class);
     }
 
@@ -111,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseListProduct findFeaturedProducts() {
+    public ResponseListProduct getFeaturedProducts() {
         List<Product> products = productRepository.findTop8ByOrderByCreatedAtDesc();
         List<ResponseProductDto> responseProductDtos = modelMapper.map(products,
                 new TypeToken<List<ResponseProductDto>>() {

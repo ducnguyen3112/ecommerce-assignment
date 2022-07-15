@@ -10,14 +10,14 @@ import com.nashtech.ecommerce.repository.ProductRepository;
 import com.nashtech.ecommerce.repository.RatingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ProductServiceImplTest {
@@ -40,30 +40,33 @@ public class ProductServiceImplTest {
     @Test
     public void createProduct_WhenRequestValid_Expect_ReturnProductAfterSave() {
         RequestCreateProductDto requestCreateProductDto = mock(RequestCreateProductDto.class);
+        LocalDateTime time=LocalDateTime.now();
         when(modelMapper.map(requestCreateProductDto, Product.class)).thenReturn(product);
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
         ResponseProductDto actualProductDto = productServiceImpl.createProduct(requestCreateProductDto);
-        verify(requestCreateProductDto).setStatus(ProductStatus.STOCKING);
-        verify(product).setCreatedAt(LocalDateTime.now());
-        verify(product).setModifiedAt(LocalDateTime.now());
+        ArgumentCaptor<LocalDateTime> localDateTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
+        verify(product).setCreatedAt(localDateTimeCaptor.capture());
+        verify(product).setModifiedAt(localDateTimeCaptor.capture());
+        assertTrue(time.isBefore(localDateTimeCaptor.getValue())||time.isEqual(localDateTimeCaptor.getValue()));
+        verify(product).setStatus(ProductStatus.STOCKING);
         assertThat(actualProductDto).isEqualTo(expectedProductDto);
     }
 
     @Test
-    public void findProductById_WhenRequestValid_Expect_ReturnProduct() {
+    public void getProduct_WhenRequestValid_Expect_ReturnProduct() {
 
         ResponseProductDto expected = mock(ResponseProductDto.class);
         when(productRepository.findById(1L)).thenReturn(productOptional);
         when(modelMapper.map(productOptional.get(), ResponseProductDto.class)).thenReturn(expected);
-        ResponseProductDto actual = productServiceImpl.findProductById(1L);
+        ResponseProductDto actual = productServiceImpl.getProduct(1L);
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    public void findUserById_WhenIdNotFound_Expect_throwResourceNotFoundException() {
+    public void getProduct_WhenIdNotFound_Expect_throwResourceNotFoundException() {
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> productServiceImpl.findProductById(1L));
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> productServiceImpl.getProduct(1L));
         assertThat(exception.getMessage()).isEqualTo("Did not find product has id = " + 1L);
     }
 
@@ -71,12 +74,15 @@ public class ProductServiceImplTest {
     @Test
     public void updateProduct_WhenRequestValid_Expect_ReturnProductAfterUpdated() {
         RequestProductDto requestProductDto = mock(RequestProductDto.class);
+        LocalDateTime time=LocalDateTime.now();
         when(productRepository.findById(1L)).thenReturn(productOptional);
         modelMapper.map(requestProductDto, product);
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
         ResponseProductDto actualProductDto = productServiceImpl.updateProduct(requestProductDto, 1L);
-//        verify(product).setModifiedAt(LocalDateTime.now());
+        ArgumentCaptor<LocalDateTime> localDateTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
+        verify(product).setModifiedAt(localDateTimeCaptor.capture());
+        assertTrue(time.isBefore(localDateTimeCaptor.getValue())||time.isEqual(localDateTimeCaptor.getValue()));
         assertEquals(expectedProductDto, actualProductDto);
 
     }

@@ -50,7 +50,7 @@ public class ProductAdminController {
         } else {
             productStatus = null;
         }
-        return productService.findAllProduct(name, productStatus, currentPage, pageSize);
+        return productService.getAllProduct(name, productStatus, currentPage, pageSize);
     }
 
     @GetMapping("/{id}")
@@ -58,7 +58,7 @@ public class ProductAdminController {
     @Operation(summary = "Show product details",
             tags = {"Administrator"})
     public ResponseProductDto findProductDtoById(@PathVariable Long id) {
-        return productService.findProductById(id);
+        return productService.getProduct(id);
     }
 
     @PostMapping

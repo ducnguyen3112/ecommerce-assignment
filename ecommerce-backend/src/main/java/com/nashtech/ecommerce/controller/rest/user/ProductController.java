@@ -37,14 +37,14 @@ public class ProductController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
         ProductStatus status = statusOptional.orElse(null);
-        return productService.findAllProduct(name, status, currentPage, pageSize);
+        return productService.getAllProduct(name, status, currentPage, pageSize);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a product by id",
             tags = {"User"})
     public ResponseProductDto findProductById(@PathVariable Long id) {
-        return productService.findProductById(id);
+        return productService.getProduct(id);
     }
 
     @PostMapping("/{id}/rating")
@@ -59,6 +59,6 @@ public class ProductController {
     @Operation(summary = "Featured products",
             tags = {"User"})
     public ResponseListProduct findFeaturedProducts() {
-        return productService.findFeaturedProducts();
+        return productService.getFeaturedProducts();
     }
 }

@@ -3,17 +3,20 @@ package com.nashtech.ecommerce.service.impl;
 import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
 import com.nashtech.ecommerce.dto.request.RequestUserDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
+import com.nashtech.ecommerce.entity.Role;
 import com.nashtech.ecommerce.entity.User;
 import com.nashtech.ecommerce.enums.UserStatus;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,14 +79,18 @@ public class UserServiceImplTest {
     public void signUp_WhenRequestSignUpValid_Expect_ReturnUserSaved() {
         RequestSignUpDto requestSignUpDto = mock(RequestSignUpDto.class);
         ResponseUserDto expected = mock(ResponseUserDto.class);
+        LocalDateTime time=LocalDateTime.now();
         when(modelMapper.map(requestSignUpDto, User.class)).thenReturn(user);
         when(userRepository.save(user)).thenReturn(user);
         when(modelMapper.map(user, ResponseUserDto.class)).thenReturn(expected);
         ResponseUserDto actual = userServiceImpl.signUp(requestSignUpDto);
         verify(requestSignUpDto).setPassword(passwordEncoder.encode(requestSignUpDto.getPassword()));
         verify(user).setStatus(UserStatus.ACTIVE);
-        verify(user).setRegisteredAt(LocalDateTime.now());
-        //verify(user).setRoles(roles);
+        ArgumentCaptor<LocalDateTime> registeredTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
+        verify(user).setRegisteredAt(registeredTimeCaptor.capture());
+        assertTrue(time.isBefore(registeredTimeCaptor.getValue())||time.isEqual(registeredTimeCaptor.getValue()));
+        ArgumentCaptor<Set<Role>> rolesCaptor=ArgumentCaptor.forClass(Set.class);
+        verify(user).setRoles(rolesCaptor.capture());
         assertThat(actual).isEqualTo(expected);
     }
 

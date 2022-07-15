@@ -8,7 +8,22 @@ const action = {
             const data  = await axios.get(
                 "https://ecommerce-nashtech-assignment.herokuapp.com/api/products/featured-products",
             );
-             dispatch({ type: constants.PRODUCT_SUCCESS, payload: data.data});
+            dispatch({ type: constants.PRODUCT_SUCCESS, payload: data.data.data});
+        } catch (error) {
+            dispatch({
+                type: constants.PRODUCT_FAIL,
+                payload: error.message,
+            });
+            console.log(error.message)
+        }
+    },
+    allProduct: () => async (dispatch) => {
+        try {
+            dispatch({ type: constants.PRODUCT_REQUEST });
+            const data  = await axios.get(
+                "https://ecommerce-nashtech-assignment.herokuapp.com/api/products",
+            );
+            dispatch({ type: constants.PRODUCT_SUCCESS, payload: data.data.data});
         } catch (error) {
             dispatch({
                 type: constants.PRODUCT_FAIL,

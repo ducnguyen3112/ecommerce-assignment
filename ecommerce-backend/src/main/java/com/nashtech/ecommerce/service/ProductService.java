@@ -8,7 +8,7 @@ import com.nashtech.ecommerce.enums.ProductStatus;
 
 public interface ProductService {
 
-    ResponseProductDto findProductById(Long id);
+    ResponseProductDto getProduct(Long id);
 
     ResponseProductDto deleteProduct(Long id);
 
@@ -16,8 +16,8 @@ public interface ProductService {
 
     ResponseProductDto updateProduct(RequestProductDto productDto, Long id);
 
-    ResponseListProduct findAllProduct(String productName, ProductStatus status, int page,
-                                       int size);
+    ResponseListProduct getAllProduct(String productName, ProductStatus status, int page,
+                                      int size);
 
-    ResponseListProduct findFeaturedProducts();
+    ResponseListProduct getFeaturedProducts();
 }

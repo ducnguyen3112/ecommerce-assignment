@@ -13,10 +13,7 @@
 }
 .product-card{
     width: 300px;
-    margin-bottom: 10px;
-}
-.product-center{
-    justify-content: center;
+
 }
 .login-container{
     display: flex;
@@ -26,4 +23,21 @@
 }
 .login-form{
     width: 30%;
+}
+.product-height{
+    height: 500px;
+    margin: 5px;
+}
+.product-container{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.product-list-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
