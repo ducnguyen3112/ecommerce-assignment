@@ -164,4 +164,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean isPhoneNumberExist(String phoneNumber) {
         return userRepository.existsByPhoneNumber(phoneNumber);
     }
+
+
 }

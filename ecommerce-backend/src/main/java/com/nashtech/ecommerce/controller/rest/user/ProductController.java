@@ -31,13 +31,14 @@ public class ProductController {
             tags = {"User"})
     public ResponseListProduct findAllProduct(
             @RequestParam(name = "name", required = false) String name,
-            @RequestParam("status") Optional<ProductStatus> statusOptional,
             @RequestParam("page") Optional<Integer> page,
+            @RequestParam("category") Optional<Long> categoryOptional,
             @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        ProductStatus status = statusOptional.orElse(null);
-        return productService.getAllProduct(name, status, currentPage, pageSize);
+        ProductStatus status = ProductStatus.STOCKING;
+        Long categoryId=categoryOptional.orElse(0L);
+        return productService.getAllProduct(name, status, currentPage, pageSize,categoryId);
     }
 
     @GetMapping("/{id}")
@@ -61,4 +62,5 @@ public class ProductController {
     public ResponseListProduct findFeaturedProducts() {
         return productService.getFeaturedProducts();
     }
+
 }

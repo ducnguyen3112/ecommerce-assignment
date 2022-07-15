@@ -8,6 +8,8 @@ import com.nashtech.ecommerce.enums.ProductStatus;
 
 public interface ProductService {
 
+    ResponseListProduct getAllProduct(String productName, ProductStatus status, int page, int size, Long categoryId);
+
     ResponseProductDto getProduct(Long id);
 
     ResponseProductDto deleteProduct(Long id);
@@ -16,8 +18,7 @@ public interface ProductService {
 
     ResponseProductDto updateProduct(RequestProductDto productDto, Long id);
 
-    ResponseListProduct getAllProduct(String productName, ProductStatus status, int page,
-                                      int size);
 
     ResponseListProduct getFeaturedProducts();
+
 }

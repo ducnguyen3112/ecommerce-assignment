@@ -1,9 +1,7 @@
 package com.nashtech.ecommerce.entity;
 
 import com.nashtech.ecommerce.enums.ProductStatus;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "products")
 public class Product {
     @OneToMany(mappedBy = "product")
