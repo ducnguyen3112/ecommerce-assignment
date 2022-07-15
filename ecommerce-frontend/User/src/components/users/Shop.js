@@ -1,26 +1,43 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Accordion from "./Accordion";
-import action from "../../redux/actions/Product";
 import ProductList from "./ProductList";
+import productAction from "../../redux/actions/Product";
+import accordionAction from "../../redux/actions/Accordion";
 
 function Shop() {
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.product);
-    const {loading, error, products} = productList;
+    const {productLoading, productError, products} = productList;
 
     useEffect(() => {
-        dispatch(action.allProduct());
+        dispatch(productAction.shopProduct());
     }, [dispatch]);
-    console.log(products);
+
+
+    const categoryList = useSelector((state) => state.category);
+    const {categoryLoading, categoryError, categories} = categoryList;
+
+    useEffect(() => {
+        dispatch(accordionAction.getCategory());
+    }, [dispatch]);
+    console.log("categories " + categories);
+
+
     return (
         <div className="container section-body">
-            <Accordion/>
+
+            <Accordion data={categories}
+                       loading={categoryLoading}
+                       error={categoryError}
+            />
+
             <ProductList data={products}
-                         loading={loading}
-                         error={error}/>
+                         loading={productLoading}
+                         error={productError}/>
         </div>
     );
 }
+
 export default Shop;

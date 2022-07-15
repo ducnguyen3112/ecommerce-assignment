@@ -6,12 +6,12 @@ import ProductCard from "./ProductCard";
 function ProductList(props) {
     return (
         <div className={'container product-container'}>
-            { props.error ? (
+            {props.error ? (
                 <Alert variant={'danger'}>
                     {props.error}
                 </Alert>
-            ):(
-                <div className={props.center+' product-list'}>{props.data.map((item) => (
+            ) : (
+                <div className={props.center + ' product-list'}>{props.data.map((item) => (
                     <ProductCard
                         key={item.id}
                         isLoading={props.loading}

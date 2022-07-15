@@ -1,24 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Spinner } from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 
 function ProductCard(props) {
     return (
-        <div >
-            {props.isLoading ? (
+        <div>
+            {props.loading ? (
                 <Spinner
                     animation="border"
                     role="status"
-                    style={{ textAlign: "center" }}
+                    style={{textAlign: "center"}}
                 >
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             ) : (
-                <div >
+                <div>
                     <div className=" product-card">
                         <div className="card product-height">
-                            <img className="card-img-top" src={props.image} alt="..." />
+                            <img className="card-img-top" src={props.image} alt="..."/>
                             <div className="card-body p-4">
                                 <div className="text-center">
                                     <h6 className="fw-bolder">{props.productName}</h6>

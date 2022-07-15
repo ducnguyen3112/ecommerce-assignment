@@ -1,13 +1,15 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import {applyMiddleware, combineReducers, createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import  authReducer  from "./reducer/Auth";
+import authReducer from "./reducer/Auth";
 import productReducer from "./reducer/Product";
+import categoryReducer from "./reducer/Category";
 
-const reducer = combineReducers ({
+const reducer = combineReducers({
     auth: authReducer,
     product: productReducer,
+    category: categoryReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")
@@ -15,12 +17,12 @@ const userInfoFromLocalStorage = localStorage.getItem("userInfo")
     : [];
 
 const initialState = {
-    auth: {userInfo:userInfoFromLocalStorage}
+    auth: {userInfo: userInfoFromLocalStorage}
 };
 
 const middleware = [thunk]
 
-const store = createStore (
+const store = createStore(
     reducer,
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))

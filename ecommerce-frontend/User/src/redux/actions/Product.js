@@ -1,14 +1,15 @@
 import * as constants from "../constants/Product";
-import  axios  from "axios";
+import * as axiosURL from "../constants/Axios";
+import axios from "axios";
 
-const action = {
+const productAction = {
     featuredProduct: () => async (dispatch) => {
         try {
-            dispatch({ type: constants.PRODUCT_REQUEST });
-            const data  = await axios.get(
-                "https://ecommerce-nashtech-assignment.herokuapp.com/api/products/featured-products",
+            dispatch({type: constants.PRODUCT_REQUEST});
+            const data = await axios.get(
+                axiosURL.AXIOS_HEROKU_URL + "/products/featured-products",
             );
-            dispatch({ type: constants.PRODUCT_SUCCESS, payload: data.data.data});
+            dispatch({type: constants.PRODUCT_SUCCESS, payload: data.data.data});
         } catch (error) {
             dispatch({
                 type: constants.PRODUCT_FAIL,
@@ -17,13 +18,16 @@ const action = {
             console.log(error.message)
         }
     },
-    allProduct: () => async (dispatch) => {
+    shopProduct: () => async (dispatch) => {
         try {
-            dispatch({ type: constants.PRODUCT_REQUEST });
-            const data  = await axios.get(
-                "https://ecommerce-nashtech-assignment.herokuapp.com/api/products",
+            dispatch({type: constants.PRODUCT_REQUEST});
+            const data = await axios.get(
+                axiosURL.AXIOS_HEROKU_URL + "/products",
+                {
+                    params: {}
+                }
             );
-            dispatch({ type: constants.PRODUCT_SUCCESS, payload: data.data.data});
+            dispatch({type: constants.PRODUCT_SUCCESS, payload: data.data.data});
         } catch (error) {
             dispatch({
                 type: constants.PRODUCT_FAIL,
@@ -31,7 +35,7 @@ const action = {
             });
             console.log(error.message)
         }
-    }
+    },
 };
 
-export default action;
+export default productAction;
