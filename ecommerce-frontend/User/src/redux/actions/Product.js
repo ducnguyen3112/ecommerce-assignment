@@ -18,13 +18,15 @@ const productAction = {
             console.log(error.message)
         }
     },
-    shopProduct: () => async (dispatch) => {
+    shopProduct: (category) => async (dispatch) => {
         try {
             dispatch({type: constants.PRODUCT_REQUEST});
             const data = await axios.get(
                 axiosURL.AXIOS_HEROKU_URL + "/products",
                 {
-                    params: {}
+                    params: {
+                        category:category,
+                    }
                 }
             );
             dispatch({type: constants.PRODUCT_SUCCESS, payload: data.data.data});

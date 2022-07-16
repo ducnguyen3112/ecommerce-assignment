@@ -1,6 +1,9 @@
 import React from 'react';
+import {useParams} from "react-router-dom";
 
 function ProductDetail() {
+    const {productId}= useParams();
+    console.log('product detail '+ productId)
     return (
         <>
             <section >

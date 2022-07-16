@@ -3,6 +3,14 @@ import Alert from "react-bootstrap/Alert";
 import {Link} from "react-router-dom";
 
 function Accordion(props) {
+    const sendCategoryID=(id)=>{
+        props.parentCallback(id);
+    }
+
+    function handleCategoryClick(id) {
+        sendCategoryID(id)
+    }
+
     return (
         <>
             {props.error ? (
@@ -22,11 +30,10 @@ function Accordion(props) {
                              data-bs-parent="#accordionExample">
                             <div className="accordion-body">
                                 {item.childCategories.map((item) => (
-                                    <div>
-                                        <Link to={item.categoryName.toLowerCase()} className={'link-style'}>
+
+                                        <div to={item.categoryName.toLowerCase()} className={'category-style'} onClick={handleCategoryClick.bind(this,item.id)} id={item.id}>
                                             {item.categoryName}
-                                        </Link>
-                                    </div>
+                                        </div>
                                 ))}
                             </div>
 

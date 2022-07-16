@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Accordion from "./Accordion";
 import ProductList from "./ProductList";
@@ -7,32 +7,33 @@ import accordionAction from "../../redux/actions/Accordion";
 
 function Shop() {
     const dispatch = useDispatch();
-
     const productList = useSelector((state) => state.product);
     const {productLoading, productError, products} = productList;
-
     useEffect(() => {
         dispatch(productAction.shopProduct());
     }, [dispatch]);
-
-
-    const categoryList = useSelector((state) => state.category);
-    const {categoryLoading, categoryError, categories} = categoryList;
+    console.log(products)
 
     useEffect(() => {
         dispatch(accordionAction.getCategory());
     }, [dispatch]);
-    console.log("categories " + categories);
+    const categoryList = useSelector((state) => state.category);
+    const {categoryLoading, categoryError, categories} = categoryList;
 
 
+    const [categoryId,setCategoryId]=useState(0);
+    const callbackCategoryId=(childData)=>{
+        setCategoryId(childData);
+        dispatch(productAction.shopProduct(childData));
+    }
     return (
         <div className="container section-body">
 
             <Accordion data={categories}
                        loading={categoryLoading}
                        error={categoryError}
+                       parentCallback={callbackCategoryId}
             />
-
             <ProductList data={products}
                          loading={productLoading}
                          error={productError}/>

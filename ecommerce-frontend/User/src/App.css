@@ -16,7 +16,7 @@
 
 .product-card {
     width: 300px;
-
+    cursor: pointer;
 }
 
 .login-container {
@@ -38,6 +38,7 @@
 .product-container {
     margin-top: 50px;
     margin-bottom: 50px;
+    min-height: 600px;
 }
 
 .product-list {
@@ -51,6 +52,7 @@
     justify-content: center;
 }
 
-.link-style {
+.category-style {
     text-decoration: none;
+    cursor: pointer;
 }

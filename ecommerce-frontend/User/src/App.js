@@ -10,14 +10,13 @@ import Login from "./components/users/Login";
 
 function App() {
     return (
-
         <BrowserRouter>
             <Navbar/>
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route path="/shop" element={<Shop/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/product-detail" element={<ProductDetail/>}/>
+                <Route path="/product-detail/:id" element={<ProductDetail/>}/>
             </Routes>
             <Footer/>
         </BrowserRouter>
