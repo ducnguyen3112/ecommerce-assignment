@@ -1,0 +1,3 @@
+export const RATING_REQUEST = "RATING_REQUEST";
+export const RATING_SUCCESS = "RATING_SUCCESS";
+export const RATING_FAIL = "RATING_FAIL";

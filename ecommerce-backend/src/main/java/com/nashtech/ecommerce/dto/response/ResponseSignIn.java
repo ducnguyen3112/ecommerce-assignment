@@ -11,8 +11,10 @@ import java.util.Collection;
 @Getter
 @Setter
 public class ResponseSignIn {
+    private Long    id;
     private String name;
     private String email;
+    private String image;
     private Collection<? extends GrantedAuthority> roles;
     private String token;
 }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,9 @@ public class UserServiceImplTest {
     private PasswordEncoder passwordEncoder;
 
     private User user;
+
+    @Value("user.avatar.default")
+    String avatarDefault;
 
     @BeforeEach
     void setUp() {
@@ -86,6 +90,7 @@ public class UserServiceImplTest {
         ResponseUserDto actual = userServiceImpl.signUp(requestSignUpDto);
         verify(requestSignUpDto).setPassword(passwordEncoder.encode(requestSignUpDto.getPassword()));
         verify(user).setStatus(UserStatus.ACTIVE);
+        verify(user).setAvatar(avatarDefault);
         ArgumentCaptor<LocalDateTime> registeredTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
         verify(user).setRegisteredAt(registeredTimeCaptor.capture());
         assertTrue(time.isBefore(registeredTimeCaptor.getValue())||time.isEqual(registeredTimeCaptor.getValue()));

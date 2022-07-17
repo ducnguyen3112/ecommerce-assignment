@@ -38,6 +38,7 @@ const productAction = {
             console.log(error.message)
         }
     },
+
 };
 
 export default productAction;

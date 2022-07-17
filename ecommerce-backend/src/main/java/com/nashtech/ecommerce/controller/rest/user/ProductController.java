@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.controller.rest.user;
 
 import com.nashtech.ecommerce.dto.request.RequestRatingDto;
 import com.nashtech.ecommerce.dto.response.ResponseListProduct;
+import com.nashtech.ecommerce.dto.response.ResponseListRating;
 import com.nashtech.ecommerce.dto.response.ResponseProductDto;
 import com.nashtech.ecommerce.dto.response.ResponseRatingDto;
 import com.nashtech.ecommerce.enums.ProductStatus;
@@ -10,6 +11,7 @@ import com.nashtech.ecommerce.service.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import java.util.Optional;
 
@@ -54,6 +56,12 @@ public class ProductController {
     public ResponseRatingDto addRatingForProduct(@PathVariable Long id,
                                                  @RequestBody RequestRatingDto requestRatingDto) {
         return ratingService.addRating(requestRatingDto, id);
+    }
+    @GetMapping("/{id}/rating")
+    @Operation(summary = "Get list rating of product",
+            tags = {"User"})
+    public List<ResponseListRating> getListRating(@PathVariable Long id){
+        return ratingService.getRatingsOfProduct(id);
     }
 
     @GetMapping("/featured-products")

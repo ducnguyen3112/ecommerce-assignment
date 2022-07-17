@@ -16,6 +16,7 @@ import org.hibernate.TypeMismatchException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${user.avatar.default}")
+    String avatarDefault;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
@@ -121,6 +125,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = modelMapper.map(signUpDto, User.class);
         user.setRegisteredAt(LocalDateTime.now());
         user.setStatus(UserStatus.ACTIVE);
+        user.setAvatar(avatarDefault);
         Set<Role> roles = new HashSet<>();
         roles.add(new Role((long) RoleName.ROLE_USER.getValue(), RoleName.ROLE_USER));
         user.setRoles(roles);

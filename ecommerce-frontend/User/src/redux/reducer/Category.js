@@ -8,7 +8,7 @@ const categoryReducer = (state = {categories: []}, action) => {
         case CATEGORY_GET_SUCCESS:
             return {loading: false, categories: action.payload};
         case CATEGORY_GET_FAIL:
-            return {loading: false, categories: action.payload};
+            return {loading: false, error: action.payload};
         default:
             return state;
     }

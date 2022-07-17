@@ -4,9 +4,9 @@ import {Spinner} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 
 function ProductCard(props) {
-    const {productId}= useParams();
+
     return (
-        <div>
+        <div className={'product-card'}>
             {props.loading ? (
                 <Spinner
                     animation="border"
@@ -46,6 +46,4 @@ function ProductCard(props) {
         </div>
     );
 }
-
-
 export default ProductCard;

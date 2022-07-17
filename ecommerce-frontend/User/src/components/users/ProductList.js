@@ -15,7 +15,6 @@ function ProductList(props) {
                 <div className={props.center + ' product-list'}>{props.data.map((item) => (
                     <ProductCard
                         data={item}
-
                     />
                 ))}
                 </div>

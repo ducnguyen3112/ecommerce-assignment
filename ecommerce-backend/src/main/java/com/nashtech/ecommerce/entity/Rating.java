@@ -19,7 +19,7 @@ public class Rating {
     private RatingId ratingId;
 
     @Column(name = "scores")
-    private int scores;
+    private float scores;
 
     @Column(name = "comment")
     private String comment;

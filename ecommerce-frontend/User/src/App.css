@@ -19,6 +19,11 @@
     cursor: pointer;
 }
 
+.product-card a{
+    text-decoration: none;
+    color: black;
+}
+
 .login-container {
     display: flex;
     margin-top: 100px;
@@ -56,3 +61,68 @@
     text-decoration: none;
     cursor: pointer;
 }
+#inputQuantity{
+    width: 60px;
+}
+.rating-card {
+    display: flex;
+    padding: 20px;
+    width: 70%;
+    word-wrap: break-word;
+    margin-top: 200px;
+    margin-bottom: 50px;
+
+}
+.comment-text{
+    margin:5px 0px 0px 5px;
+}
+.comment-box{
+
+    padding:5px;
+}
+
+
+
+.comment-area textarea{
+    resize: none;
+    border: 1px solid #ad9f9f;
+}
+
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ffffff;
+    outline: 0;
+    box-shadow: 0 0 0 1px rgb(255, 0, 0) !important;
+}
+
+.send {
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+
+.send:hover {
+    color: #fff;
+    background-color: #f50202;
+    border-color: #f50202;
+}
+.container-comment{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: stretch;
+    align-items: flex-start;
+}
+.comment-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+.footer{
+    margin-top: 50px;
+}
+.nav-bar{
+    margin-bottom: 50px;
+}
+

@@ -12,7 +12,6 @@ function Shop() {
     useEffect(() => {
         dispatch(productAction.shopProduct());
     }, [dispatch]);
-    console.log(products)
 
     useEffect(() => {
         dispatch(accordionAction.getCategory());
@@ -21,9 +20,8 @@ function Shop() {
     const {categoryLoading, categoryError, categories} = categoryList;
 
 
-    const [categoryId,setCategoryId]=useState(0);
     const callbackCategoryId=(childData)=>{
-        setCategoryId(childData);
+
         dispatch(productAction.shopProduct(childData));
     }
     return (
