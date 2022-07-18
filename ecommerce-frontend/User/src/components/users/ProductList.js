@@ -1,7 +1,6 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import ProductCard from "./ProductCard";
-import {useParams} from "react-router-dom";
 
 function ProductList(props) {
 
@@ -12,7 +11,8 @@ function ProductList(props) {
                     {props.error}
                 </Alert>
             ) : (
-                <div className={props.center + ' product-list'}>{props.data.map((item) => (
+                <div
+                    className={props.center + ' product-list'}>{props.data.map((item) => (
                     <ProductCard
                         data={item}
                     />

@@ -19,7 +19,7 @@
     cursor: pointer;
 }
 
-.product-card a{
+.product-card a {
     text-decoration: none;
     color: black;
 }
@@ -61,9 +61,11 @@
     text-decoration: none;
     cursor: pointer;
 }
-#inputQuantity{
+
+#inputQuantity {
     width: 60px;
 }
+
 .rating-card {
     display: flex;
     padding: 20px;
@@ -73,17 +75,18 @@
     margin-bottom: 50px;
 
 }
-.comment-text{
-    margin:5px 0px 0px 5px;
-}
-.comment-box{
 
-    padding:5px;
+.comment-text {
+    margin: 5px 0px 0px 5px;
 }
 
+.comment-box {
+
+    padding: 5px;
+}
 
 
-.comment-area textarea{
+.comment-area textarea {
     resize: none;
     border: 1px solid #ad9f9f;
 }
@@ -108,21 +111,25 @@
     background-color: #f50202;
     border-color: #f50202;
 }
-.container-comment{
+
+.container-comment {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-content: stretch;
     align-items: flex-start;
 }
-.comment-btn{
+
+.comment-btn {
     display: flex;
     justify-content: flex-end;
 }
-.footer{
+
+.footer {
     margin-top: 50px;
 }
-.nav-bar{
+
+.nav-bar {
     margin-bottom: 50px;
 }
 

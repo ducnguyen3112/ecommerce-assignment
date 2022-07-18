@@ -12,6 +12,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByStatusAndProductNameContaining(String name, ProductStatus status,
                                                        Pageable pageable);
+
     @Query("SELECT P FROM Product P WHERE P.category.id=?1 and P.status='STOCKING'")
     Page<Product> findProductByCategory(Long CategoryId, Pageable pageable);
 

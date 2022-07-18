@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Accordion from "./Accordion";
 import ProductList from "./ProductList";
@@ -20,7 +20,7 @@ function Shop() {
     const {categoryLoading, categoryError, categories} = categoryList;
 
 
-    const callbackCategoryId=(childData)=>{
+    const callbackCategoryId = (childData) => {
 
         dispatch(productAction.shopProduct(childData));
     }

@@ -23,7 +23,7 @@ public class UserDetailsImpl implements UserDetails {
     private String image;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String name, String email, String password,String image,
+    public UserDetailsImpl(Long id, String name, String email, String password, String image,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
@@ -40,7 +40,7 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(user.getId(),
                 user.getFirstName() + " " + user.getLastName(), user.getEmail(),
-                user.getPassword(),user.getAvatar(), authorities);
+                user.getPassword(), user.getAvatar(), authorities);
     }
 
     @Override

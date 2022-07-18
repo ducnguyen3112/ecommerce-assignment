@@ -68,7 +68,8 @@ const Navbar = () => {
                                             aria-labelledby="navbarDropdown"
                                         >
                                             <li>
-                                                <Link className="dropdown-item" to="/profile">
+                                                <Link className="dropdown-item"
+                                                      to="/profile">
                                                     Profile
                                                 </Link>
                                             </li>
@@ -103,7 +104,8 @@ const Navbar = () => {
                                             aria-labelledby="navbarDropdown"
                                         >
                                             <li>
-                                                <Link className="dropdown-item" to="/login">
+                                                <Link className="dropdown-item"
+                                                      to="/login">
                                                     Login/Signup
                                                 </Link>
                                             </li>
@@ -111,10 +113,12 @@ const Navbar = () => {
                                     </li>
                                 )}
                                 <li className="nav-item" style={{paddingLeft: 12}}>
-                                    <button className="btn btn-outline-dark" type="submit">
+                                    <button className="btn btn-outline-dark"
+                                            type="submit">
                                         <i className="bi-cart-fill me-1"></i>
                                         Cart
-                                        <span className="badge bg-dark text-white ms-1 rounded-pill">
+                                        <span
+                                            className="badge bg-dark text-white ms-1 rounded-pill">
                                             0
                                         </span>
                                     </button>

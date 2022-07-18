@@ -40,15 +40,15 @@ public class ProductServiceImplTest {
     @Test
     public void createProduct_WhenRequestValid_Expect_ReturnProductAfterSave() {
         RequestCreateProductDto requestCreateProductDto = mock(RequestCreateProductDto.class);
-        LocalDateTime time=LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         when(modelMapper.map(requestCreateProductDto, Product.class)).thenReturn(product);
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
         ResponseProductDto actualProductDto = productServiceImpl.createProduct(requestCreateProductDto);
-        ArgumentCaptor<LocalDateTime> localDateTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
+        ArgumentCaptor<LocalDateTime> localDateTimeCaptor = ArgumentCaptor.forClass(LocalDateTime.class);
         verify(product).setCreatedAt(localDateTimeCaptor.capture());
         verify(product).setModifiedAt(localDateTimeCaptor.capture());
-        assertTrue(time.isBefore(localDateTimeCaptor.getValue())||time.isEqual(localDateTimeCaptor.getValue()));
+        assertTrue(time.isBefore(localDateTimeCaptor.getValue()) || time.isEqual(localDateTimeCaptor.getValue()));
         verify(product).setStatus(ProductStatus.STOCKING);
         assertThat(actualProductDto).isEqualTo(expectedProductDto);
     }
@@ -74,15 +74,15 @@ public class ProductServiceImplTest {
     @Test
     public void updateProduct_WhenRequestValid_Expect_ReturnProductAfterUpdated() {
         RequestProductDto requestProductDto = mock(RequestProductDto.class);
-        LocalDateTime time=LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         when(productRepository.findById(1L)).thenReturn(productOptional);
         modelMapper.map(requestProductDto, product);
         when(productRepository.save(product)).thenReturn(product);
         ResponseProductDto expectedProductDto = modelMapper.map(product, ResponseProductDto.class);
         ResponseProductDto actualProductDto = productServiceImpl.updateProduct(requestProductDto, 1L);
-        ArgumentCaptor<LocalDateTime> localDateTimeCaptor=ArgumentCaptor.forClass(LocalDateTime.class);
+        ArgumentCaptor<LocalDateTime> localDateTimeCaptor = ArgumentCaptor.forClass(LocalDateTime.class);
         verify(product).setModifiedAt(localDateTimeCaptor.capture());
-        assertTrue(time.isBefore(localDateTimeCaptor.getValue())||time.isEqual(localDateTimeCaptor.getValue()));
+        assertTrue(time.isBefore(localDateTimeCaptor.getValue()) || time.isEqual(localDateTimeCaptor.getValue()));
         assertEquals(expectedProductDto, actualProductDto);
 
     }

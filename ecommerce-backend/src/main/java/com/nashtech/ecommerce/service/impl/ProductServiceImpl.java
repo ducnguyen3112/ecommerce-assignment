@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseListProduct getAllProduct(String productName, ProductStatus status, int page, int size,Long categoryId) {
+    public ResponseListProduct getAllProduct(String productName, ProductStatus status, int page, int size, Long categoryId) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> productPage;
         if (status == null) {
@@ -54,8 +54,8 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 productPage = productRepository.findByStatus(status, pageable);
             }
-            if (categoryId!=0){
-                productPage=productRepository.findProductByCategory(categoryId,pageable);
+            if (categoryId != 0) {
+                productPage = productRepository.findProductByCategory(categoryId, pageable);
             }
         }
         List<Product> products = productPage.getContent();
@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
                 .productDtos(responseProductDtos)
                 .build();
     }
+
     @Override
     public ResponseProductDto getProduct(Long id) {
         Product product = productRepository.findById(id)
@@ -81,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseProductDto createProduct(RequestCreateProductDto productDto) {
-        Product product= modelMapper.map(productDto, Product.class);
+        Product product = modelMapper.map(productDto, Product.class);
         product.setCreatedAt(LocalDateTime.now());
         product.setModifiedAt(LocalDateTime.now());
         product.setAvgRating(0F);

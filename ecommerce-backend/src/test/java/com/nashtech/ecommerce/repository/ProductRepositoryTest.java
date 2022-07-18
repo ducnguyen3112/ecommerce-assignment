@@ -20,14 +20,14 @@ public class ProductRepositoryTest {
     private CategoryRepository categoryRepository;
 
     @BeforeEach
-    void setUp(){
-        Category category=new Category();
+    void setUp() {
+        Category category = new Category();
         category.setId(1L);
         categoryRepository.save(category);
-        Category category2=new Category();
+        Category category2 = new Category();
         category2.setId(2L);
         categoryRepository.save(category2);
-        Product product1=Product.builder()
+        Product product1 = Product.builder()
                 .id(1L)
                 .productName("Gsock")
                 .price(1000L)
@@ -36,7 +36,7 @@ public class ProductRepositoryTest {
                 .category(category)
                 .build();
         productRepository.save(product1);
-        Product product2=Product.builder()
+        Product product2 = Product.builder()
                 .id(2L)
                 .productName("tissot")
                 .price(1000L)
@@ -49,10 +49,10 @@ public class ProductRepositoryTest {
 
 
     @Test
-    void findProductByCategory_WhenRequestValid_Expect_ReturnProductPage(){
-        int expected=1;
+    void findProductByCategory_WhenRequestValid_Expect_ReturnProductPage() {
+        int expected = 1;
         Pageable pageable = PageRequest.of(0, 10);
-        Page<Product> productPage=productRepository.findProductByCategory(1L,pageable);
+        Page<Product> productPage = productRepository.findProductByCategory(1L, pageable);
         Assertions.assertThat(productPage.getContent().size()).isEqualTo(expected);
     }
 }

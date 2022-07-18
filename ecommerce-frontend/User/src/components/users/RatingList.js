@@ -4,7 +4,7 @@ import Rating from "./Rating";
 import {useDispatch, useSelector} from "react-redux";
 
 const RatingList = (props) => {
-    const {listRating,setListRating} = props
+    const {listRating, setListRating} = props
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,8 +18,8 @@ const RatingList = (props) => {
     }, [ratingList]);
     return (
         <div className={"w-50"}>
-            {listRating.map((item)=>(
-            <Rating data={item} />
+            {listRating.map((item) => (
+                <Rating data={item}/>
             ))}
         </div>
     );

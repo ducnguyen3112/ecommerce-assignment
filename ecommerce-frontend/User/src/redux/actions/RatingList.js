@@ -1,7 +1,10 @@
-import {RATING_LIST_FAIL, RATING_LIST_REQUEST, RATING_LIST_SUCCESS} from "../constants/RatingList";
+import {
+    RATING_LIST_FAIL,
+    RATING_LIST_REQUEST,
+    RATING_LIST_SUCCESS
+} from "../constants/RatingList";
 import axios from "axios";
 import * as axiosURL from "../constants/Axios";
-import * as constants from "../constants/Product";
 
 
 const ratingListAction = {
@@ -9,7 +12,7 @@ const ratingListAction = {
         try {
             dispatch({type: RATING_LIST_REQUEST});
             const data = await axios.get(
-                axiosURL.AXIOS_HEROKU_URL +`/products/${productId}`+`/rating`,
+                axiosURL.AXIOS_HEROKU_URL + `/products/${productId}` + `/rating`,
             );
             dispatch({type: RATING_LIST_SUCCESS, payload: data.data});
         } catch (error) {

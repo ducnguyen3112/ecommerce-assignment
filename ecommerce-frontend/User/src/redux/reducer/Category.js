@@ -1,4 +1,8 @@
-import {CATEGORY_GET_FAIL, CATEGORY_GET_REQUEST, CATEGORY_GET_SUCCESS} from "../constants/Category";
+import {
+    CATEGORY_GET_FAIL,
+    CATEGORY_GET_REQUEST,
+    CATEGORY_GET_SUCCESS
+} from "../constants/Category";
 
 
 const categoryReducer = (state = {categories: []}, action) => {

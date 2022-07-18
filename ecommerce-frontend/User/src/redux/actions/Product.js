@@ -25,7 +25,7 @@ const productAction = {
                 axiosURL.AXIOS_HEROKU_URL + "/products",
                 {
                     params: {
-                        category:category,
+                        category: category,
                     }
                 }
             );

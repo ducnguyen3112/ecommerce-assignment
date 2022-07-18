@@ -13,9 +13,9 @@ const reducer = combineReducers({
     auth: authReducer,
     product: productReducer,
     category: categoryReducer,
-    productDetail:productDetailReducer,
+    productDetail: productDetailReducer,
     rating: ratingReducer,
-    ratingList:ratingListReducer,
+    ratingList: ratingListReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")

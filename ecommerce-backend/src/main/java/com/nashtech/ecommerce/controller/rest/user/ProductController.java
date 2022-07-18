@@ -11,8 +11,8 @@ import com.nashtech.ecommerce.service.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -39,8 +39,8 @@ public class ProductController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
         ProductStatus status = ProductStatus.STOCKING;
-        Long categoryId=categoryOptional.orElse(0L);
-        return productService.getAllProduct(name, status, currentPage, pageSize,categoryId);
+        Long categoryId = categoryOptional.orElse(0L);
+        return productService.getAllProduct(name, status, currentPage, pageSize, categoryId);
     }
 
     @GetMapping("/{id}")
@@ -57,10 +57,11 @@ public class ProductController {
                                                  @RequestBody RequestRatingDto requestRatingDto) {
         return ratingService.addRating(requestRatingDto, id);
     }
+
     @GetMapping("/{id}/rating")
     @Operation(summary = "Get list rating of product",
             tags = {"User"})
-    public List<ResponseListRating> getListRating(@PathVariable Long id){
+    public List<ResponseListRating> getListRating(@PathVariable Long id) {
         return ratingService.getRatingsOfProduct(id);
     }
 

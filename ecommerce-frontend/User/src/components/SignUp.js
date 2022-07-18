@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useLocation, useNavigate} from 'react-router-dom'
 
 import action from './../redux/actions/Auth';
 import selector from './../redux/selector/Auth';
@@ -9,7 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
 function Signup() {
-    let navigate =  useNavigate();
+    let navigate = useNavigate();
     let location = useLocation();
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ function Signup() {
     const userRegister = useSelector(selector.userRegister)
     const {error, loading, userInfo} = userRegister;
 
-    const redirect = location.search ? location.search.split("=")[1]:"/";
+    const redirect = location.search ? location.search.split("=")[1] : "/";
 
     useEffect(() => {
         if (localStorage.getItem("userInfo")) {
@@ -59,10 +59,10 @@ function Signup() {
             </div>
             <div className="mb-3">
                 <label>Last name</label>
-                <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Last name" 
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Last name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                 />
@@ -79,9 +79,9 @@ function Signup() {
             </div>
             <div className="mb-3">
                 <label for="phone">Enter your phone number:</label>
-                <input 
-                    type="tel" 
-                    id="phone" 
+                <input
+                    type="tel"
+                    id="phone"
                     className="form-control"
                     placeholder="Enter phone number"
                     pattern="[0]{1}[0-9]{9}"

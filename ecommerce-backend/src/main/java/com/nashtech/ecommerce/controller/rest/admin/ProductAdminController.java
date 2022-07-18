@@ -50,7 +50,7 @@ public class ProductAdminController {
         } else {
             productStatus = null;
         }
-        return productService.getAllProduct(name, productStatus, currentPage, pageSize,0L);
+        return productService.getAllProduct(name, productStatus, currentPage, pageSize, 0L);
     }
 
     @GetMapping("/{id}")

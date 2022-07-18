@@ -1,7 +1,10 @@
-
 import axios from "axios";
 import * as axiosURL from "../constants/Axios";
-import {PRODUCT_DETAIL_FAIL, PRODUCT_DETAIL_REQUEST, PRODUCT_DETAIL_SUCCESS} from "../constants/ProductDetail";
+import {
+    PRODUCT_DETAIL_FAIL,
+    PRODUCT_DETAIL_REQUEST,
+    PRODUCT_DETAIL_SUCCESS
+} from "../constants/ProductDetail";
 
 const productDetailAction = {
     productDetail: (id) => async (dispatch) => {

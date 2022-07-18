@@ -6,8 +6,8 @@ const authAction = {
     register: (firstName, lastName, email, phoneNumber, password) => async (dispatch) => {
         try {
             dispatch({type: constants.USER_REGISTER_REQUEST});
-             await axios.post(
-                axiosURL.AXIOS_HEROKU_URL +"/auth/signup",
+            await axios.post(
+                axiosURL.AXIOS_HEROKU_URL + "/auth/signup",
                 {firstName, lastName, email, phoneNumber, password},
             );
             // dispatch({ type: constants.USER_REGISTER_SUCCESS, payload: data});
@@ -24,7 +24,7 @@ const authAction = {
         try {
             dispatch({type: constants.USER_LOGIN_REQUEST});
             const data = await axios.post(
-                axiosURL.AXIOS_HEROKU_URL +"/auth/signin",
+                axiosURL.AXIOS_HEROKU_URL + "/auth/signin",
                 {email, password},
             );
             dispatch({type: constants.USER_LOGIN_SUCCESS, payload: data});

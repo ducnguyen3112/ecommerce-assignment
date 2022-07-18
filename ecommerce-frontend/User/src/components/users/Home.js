@@ -8,7 +8,7 @@ function Home() {
     const dispatch = useDispatch();
     const productList = useSelector((state) => state.product);
     const {loading, error, products} = productList;
-    const center='product-list-center';
+    const center = 'product-list-center';
 
     useEffect(() => {
         dispatch(action.featuredProduct());
@@ -18,10 +18,10 @@ function Home() {
         <>
             <Header/>
             <ProductList data={products}
-            loading={loading}
-            error={error}
+                         loading={loading}
+                         error={error}
                          center={center}
-           />
+            />
 
         </>
     );

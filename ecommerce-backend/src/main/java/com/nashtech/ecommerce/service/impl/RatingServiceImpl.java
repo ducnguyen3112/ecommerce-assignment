@@ -4,8 +4,8 @@ import com.nashtech.ecommerce.dto.request.RequestRatingDto;
 import com.nashtech.ecommerce.dto.response.ResponseListRating;
 import com.nashtech.ecommerce.dto.response.ResponseRatingDto;
 import com.nashtech.ecommerce.entity.Rating;
-import com.nashtech.ecommerce.entity.User;
 import com.nashtech.ecommerce.entity.RatingId;
+import com.nashtech.ecommerce.entity.User;
 import com.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.ecommerce.repository.RatingRepository;
 import com.nashtech.ecommerce.repository.UserRepository;
@@ -26,11 +26,11 @@ public class RatingServiceImpl implements RatingService {
     UserRepository userRepository;
 
     @Autowired
-    public RatingServiceImpl(RatingRepository ratingRepository,UserRepository userRepository, ModelMapper modelMapper) {
+    public RatingServiceImpl(RatingRepository ratingRepository, UserRepository userRepository, ModelMapper modelMapper) {
         super();
         this.ratingRepository = ratingRepository;
         this.modelMapper = modelMapper;
-        this.userRepository=userRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -46,16 +46,16 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<ResponseListRating> getRatingsOfProduct(Long productId) {
-        List<ResponseListRating> responseList=new ArrayList<>();
+        List<ResponseListRating> responseList = new ArrayList<>();
         List<Rating> ratingList = ratingRepository.findRatingByRatingIdProductId(productId).orElseThrow(() ->
                 new ResourceNotFoundException("can't find list rating of product with id: " + productId));
         ratingList.forEach(rating -> {
-             ResponseListRating responseListRating=modelMapper.map(rating,ResponseListRating.class);
-             User user=userRepository.findById(rating.getRatingId().getUserId()).get();
-             responseListRating.setAvatar(user.getAvatar());
-             responseListRating.setUserId(user.getId());
-             responseListRating.setFullName(user.getFullName());
-             responseList.add(responseListRating);
+            ResponseListRating responseListRating = modelMapper.map(rating, ResponseListRating.class);
+            User user = userRepository.findById(rating.getRatingId().getUserId()).get();
+            responseListRating.setAvatar(user.getAvatar());
+            responseListRating.setUserId(user.getId());
+            responseListRating.setFullName(user.getFullName());
+            responseList.add(responseListRating);
         });
 
         return responseList;
