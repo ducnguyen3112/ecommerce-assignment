@@ -61,7 +61,7 @@ const Navbar = () => {
                                             data-bs-toggle="dropdown"
                                             aria-expanded="false"
                                         >
-                                            Hello {userInfo.data.name}
+                                            Hello {userInfo.name}
                                         </a>
                                         <ul
                                             className="dropdown-menu"

@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import action from "../../redux/actions/Product";
 import Header from "./Header";
 import ProductList from "./ProductList";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Home() {
     const dispatch = useDispatch();
@@ -16,13 +18,14 @@ function Home() {
     console.log(products);
     return (
         <>
+            <Navbar/>
             <Header/>
             <ProductList data={products}
                          loading={loading}
                          error={error}
                          center={center}
             />
-
+            <Footer/>
         </>
     );
 }

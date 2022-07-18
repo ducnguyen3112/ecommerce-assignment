@@ -8,7 +8,7 @@ import selector from './../redux/selector/Auth';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-const SignIn = () => {
+const Login = () => {
     let navigate = useNavigate();
     let location = useLocation();
     const dispatch = useDispatch();
@@ -37,13 +37,8 @@ const SignIn = () => {
             <h3>Sign In</h3>
             {error &&
                 <Alert variant={'danger'}>
-                    {error}
+                    {error.data.message}
                 </Alert>
-            }
-            {loading &&
-                <Spinner animation="border" role="status" style={{textAlign: "center"}}>
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
             }
             <div className="mb-3">
                 <label>Email address</label>
@@ -74,4 +69,4 @@ const SignIn = () => {
     );
 }
 
-export default SignIn;
+export default Login;

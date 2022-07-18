@@ -39,13 +39,8 @@ function Signup() {
             <h3>Sign Up</h3>
             {error &&
                 <Alert variant={'danger'}>
-                    {error}
+                    {error.data.message}
                 </Alert>
-            }
-            {loading &&
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
             }
             <div className="mb-3">
                 <label>First name</label>

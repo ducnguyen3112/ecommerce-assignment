@@ -4,6 +4,8 @@ import Accordion from "./Accordion";
 import ProductList from "./ProductList";
 import productAction from "../../redux/actions/Product";
 import accordionAction from "../../redux/actions/Accordion";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Shop() {
     const dispatch = useDispatch();
@@ -25,17 +27,22 @@ function Shop() {
         dispatch(productAction.shopProduct(childData));
     }
     return (
-        <div className="container section-body">
 
-            <Accordion data={categories}
-                       loading={categoryLoading}
-                       error={categoryError}
-                       parentCallback={callbackCategoryId}
-            />
-            <ProductList data={products}
-                         loading={productLoading}
-                         error={productError}/>
-        </div>
+        <>
+            <Navbar/>
+            <div className="container section-body">
+
+                <Accordion data={categories}
+                           loading={categoryLoading}
+                           error={categoryError}
+                           parentCallback={callbackCategoryId}
+                />
+                <ProductList data={products}
+                             loading={productLoading}
+                             error={productError}/>
+            </div>
+            <Footer/>
+        </>
     );
 }
 

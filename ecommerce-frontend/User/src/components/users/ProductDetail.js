@@ -5,6 +5,8 @@ import productDetailAction from "../../redux/actions/ProductDetail";
 import NumberFormat from "react-number-format";
 import SendRating from "./SendRating";
 import RatingList from "./RatingList";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 function ProductDetail() {
     const dispatch = useDispatch();
@@ -24,6 +26,8 @@ function ProductDetail() {
     const [listRating, setListRating] = useState([])
     console.log(listRating)
     return (
+        <>
+            <Navbar/>
         <div className={'container container-comment'}>
             <section>
                 <div className=" px-4 px-lg-5 my-5">
@@ -60,6 +64,8 @@ function ProductDetail() {
             <RatingList productId={id} listRating={listRating}
                         setListRating={setListRating}/>
         </div>
+            <Footer/>
+        </>
 
 
     );

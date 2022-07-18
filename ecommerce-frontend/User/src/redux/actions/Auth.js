@@ -11,13 +11,11 @@ const authAction = {
                 {firstName, lastName, email, phoneNumber, password},
             );
             // dispatch({ type: constants.USER_REGISTER_SUCCESS, payload: data});
-            document.location.href = "/Sign-In"
         } catch (error) {
             dispatch({
                 type: constants.USER_REGISTER_FAIL,
-                payload: error.message,
+                payload: error.response,
             });
-            console.log(error.message)
         }
     },
     login: (email, password) => async (dispatch) => {
@@ -32,9 +30,8 @@ const authAction = {
         } catch (error) {
             dispatch({
                 type: constants.USER_LOGIN_FAIL,
-                payload: error.message,
+                payload: error.response,
             });
-            console.log(error.message)
         }
     },
     logout: () => (dispatch) => {
