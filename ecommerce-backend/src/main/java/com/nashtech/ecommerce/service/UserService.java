@@ -5,13 +5,15 @@ import com.nashtech.ecommerce.dto.request.RequestUserDto;
 import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.security.UserDetailsImpl;
+import com.nashtech.ecommerce.service.impl.RequestEditUser;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
 
     ResponseUserDto getUser(Long id);
 
-    ResponseUserDto updateUser(RequestUserDto userDto, Long id);
+
+    ResponseUserDto updateUser(RequestEditUser requestEditUser, Long id);
 
     ResponseUserDto deleteUser(Long id);
 

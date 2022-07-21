@@ -8,10 +8,10 @@ const ratingAction = {
         try {
             dispatch({type: RATING_REQUEST});
             await axios.post(
-                axiosURL.AXIOS_HEROKU_URL + `/products/${productId}` + `/rating`,
+                axiosURL.AXIOS_HEROKU_URL + `/products/${productId}/rating`,
                 {user_id, comment, scores},
             );
-            console.log(axiosURL.AXIOS_HEROKU_URL + `${productId}` + `/rating`)
+            console.log(axiosURL.AXIOS_HEROKU_URL + `${productId}/rating`)
         } catch (error) {
             dispatch({
                 type: RATING_FAIL,

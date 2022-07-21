@@ -24,7 +24,6 @@ function ProductDetail() {
     }, [dispatch]);
 
     const [listRating, setListRating] = useState([])
-    console.log(listRating)
     return (
         <>
             <Navbar/>

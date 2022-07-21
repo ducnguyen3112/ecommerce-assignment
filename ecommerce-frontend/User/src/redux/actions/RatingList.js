@@ -12,7 +12,7 @@ const ratingListAction = {
         try {
             dispatch({type: RATING_LIST_REQUEST});
             const data = await axios.get(
-                axiosURL.AXIOS_HEROKU_URL + `/products/${productId}` + `/rating`,
+                axiosURL.AXIOS_HEROKU_URL + `/products/${productId}/rating`,
             );
             dispatch({type: RATING_LIST_SUCCESS, payload: data.data});
         } catch (error) {

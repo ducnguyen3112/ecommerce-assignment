@@ -133,11 +133,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public ResponseUserDto updateUser(RequestUserDto userDto, Long id) {
+    public ResponseUserDto updateUser(RequestEditUser requestEditUser, Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Did not find user has id = " + id));
-        modelMapper.map(userDto, user);
+        modelMapper.map(requestEditUser, user);
+        Set<Role> roles=new HashSet<>();
+
+        if (requestEditUser.getRoles().contains("admin")){
+            roles.add(new Role((long) RoleName.ROLE_ADMIN.getValue(), RoleName.ROLE_ADMIN));
+        }else{
+            roles.add(new Role((long) RoleName.ROLE_USER.getValue(),
+                    RoleName.ROLE_USER));
+        }
+        user.setRoles(roles);
         user = userRepository.save(user);
         return modelMapper.map(user, ResponseUserDto.class);
     }

@@ -8,6 +8,8 @@ import categoryReducer from "./reducer/Category";
 import productDetailReducer from "./reducer/ProductDetail";
 import ratingReducer from "./reducer/Rating";
 import ratingListReducer from "./reducer/RatingList";
+import adminUserReducer from "./reducer/AdminUser";
+import OneAdminUserReducer from "./reducer/OneAdminUser";
 
 const reducer = combineReducers({
     auth: authReducer,
@@ -16,6 +18,8 @@ const reducer = combineReducers({
     productDetail: productDetailReducer,
     rating: ratingReducer,
     ratingList: ratingListReducer,
+    adminUsers:adminUserReducer,
+    oneAdminUser:OneAdminUserReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")

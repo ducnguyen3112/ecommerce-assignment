@@ -34,6 +34,7 @@ function Signup() {
         e.preventDefault();
         dispatch(action.register(firstName, lastName, email, phoneNumber, password));
     };
+    console.log(error)
     return (
         <form onSubmit={submitHandler} className={'login-form'}>
             <h3>Sign Up</h3>

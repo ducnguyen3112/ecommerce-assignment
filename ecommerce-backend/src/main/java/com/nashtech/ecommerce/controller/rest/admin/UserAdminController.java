@@ -5,7 +5,9 @@ import com.nashtech.ecommerce.dto.response.ResponseListUser;
 import com.nashtech.ecommerce.dto.response.ResponseMessageDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.service.UserService;
+import com.nashtech.ecommerce.service.impl.RequestEditUser;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +17,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/users")
+@CrossOrigin
 //@Tag(name = 
 //        description = "Allow to display and edit user data")
+@Slf4j
 public class UserAdminController {
 
     private final UserService userService;
@@ -61,6 +65,7 @@ public class UserAdminController {
             return new ResponseMessageDto(HttpStatus.OK, "Phone number is existed",
                     LocalDateTime.now());
         }
+        log.info("lkhonsadfas");
         userService.createUser(requestUserDto);
         return new ResponseMessageDto(HttpStatus.OK, "Create user success!",
                 LocalDateTime.now());
@@ -71,8 +76,8 @@ public class UserAdminController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Edit information of user",
             tags = {"Administrator"})
-    public ResponseUserDto updateUser(@Valid @RequestBody RequestUserDto userDto, @PathVariable Long id) {
-        return userService.updateUser(userDto, id);
+    public ResponseUserDto updateUser(@Valid @RequestBody RequestEditUser requestEditUser, @PathVariable Long id) {
+        return userService.updateUser(requestEditUser, id);
     }
 
     @DeleteMapping("/{id}")

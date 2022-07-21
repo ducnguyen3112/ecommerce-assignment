@@ -29,8 +29,8 @@ const SendRating = (props) => {
     };
     const isCommented = () => {
         listRating.map((item) => {
-            if (userInfo.data != undefined) {
-                if (item.userId == userInfo.data.id) {
+            if (userInfo.data !== undefined) {
+                if (item.userId === userInfo.data.id) {
                     disabled = true;
                 } else {
                     disabled = false;
@@ -56,7 +56,7 @@ const SendRating = (props) => {
     return (
         <div>
             {
-                userInfo.data != undefined ? (
+                userInfo.data !== undefined ? (
                     <div className="card rating-card ">
                         <div className="row">
                             <div className="col-1">

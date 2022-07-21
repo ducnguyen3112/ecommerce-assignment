@@ -22,14 +22,17 @@ const AdminLogin = () => {
             password: password
         })
             .then(function (response) {
+                console.log(response.data)
                 response.data.roles.map((item)=>{
                     if (item.authority=="ROLE_ADMIN"){
                         setUserInfo(response.data);
-                        localStorage.setItem("userInfo", JSON.stringify(response.data));
+                        localStorage.setItem("userInfo", JSON.stringify(response.data))
+                        localStorage.setItem("Token", response.data.token);
                     }
                 })
             })
             .catch(function (error) {
+                console.log(error.response)
                 setError(error.response.data)
             });
     }
@@ -40,6 +43,7 @@ const AdminLogin = () => {
     }, [userInfo])
     const submitHandler = (e) => {
         e.preventDefault();
+        console.log(1)
         loginAction(email,password);
     };
     return (

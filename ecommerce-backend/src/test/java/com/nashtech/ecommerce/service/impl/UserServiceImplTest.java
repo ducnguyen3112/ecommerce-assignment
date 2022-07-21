@@ -1,7 +1,6 @@
 package com.nashtech.ecommerce.service.impl;
 
 import com.nashtech.ecommerce.dto.request.RequestSignUpDto;
-import com.nashtech.ecommerce.dto.request.RequestUserDto;
 import com.nashtech.ecommerce.dto.response.ResponseUserDto;
 import com.nashtech.ecommerce.entity.Role;
 import com.nashtech.ecommerce.entity.User;
@@ -97,7 +96,7 @@ public class UserServiceImplTest {
 
     @Test
     public void updateUser_WhenRequestUserDtoValid_Expect_ReturnUserUpdated() {
-        RequestUserDto userDto = mock(RequestUserDto.class);
+        RequestEditUser userDto = mock(RequestEditUser.class);
         when(userRepository.findById(1L)).thenReturn(userOptional);
         when(userRepository.save(user)).thenReturn(user);
         ResponseUserDto expectedUserDto = modelMapper.map(user, ResponseUserDto.class);

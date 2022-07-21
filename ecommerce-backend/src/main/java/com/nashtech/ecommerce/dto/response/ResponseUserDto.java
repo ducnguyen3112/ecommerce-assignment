@@ -22,7 +22,7 @@ public class ResponseUserDto {
 
     private String lastName;
 
-    private String phoneNum;
+    private String phoneNumber;
 
     private String email;
 

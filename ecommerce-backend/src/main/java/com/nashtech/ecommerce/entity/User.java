@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -47,7 +46,6 @@ public class User {
     @Column(name = "address")
     private String address;
     @Enumerated(EnumType.STRING)
-    @NaturalId
     @Column(name = "status")
     private UserStatus status;
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
