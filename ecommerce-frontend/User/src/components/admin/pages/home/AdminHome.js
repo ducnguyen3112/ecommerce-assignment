@@ -5,6 +5,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import adminUserAction from "../../../../redux/actions/AdminUsers";
 import DataTable from 'react-data-table-component';
+import '../../../Pagination'
+import Pagination from "../../../Pagination";
 
 const AdminHome = () => {
     const dispatch = useDispatch();
@@ -83,7 +85,6 @@ const AdminHome = () => {
         },
 
     ];
-    console.log(adminUsers.data)
 
     return (
         <>
@@ -95,10 +96,11 @@ const AdminHome = () => {
                     <button className='btn btn-info' onClick={() => navigate('/admin/users')}>New User</button>
                     <DataTable
                         columns={columns}
-                        data={adminUsers.data}
+                        data={adminUsers?(adminUsers.data):('')}
                         defaultSortField="id"
                         progressPending={loading}
                     />
+                    <Pagination/>
                 </main>
 
             </div>
