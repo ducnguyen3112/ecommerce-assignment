@@ -23,10 +23,12 @@ const AdminHome = () => {
     }, [navigate, redirect])
     useEffect(() => {
         dispatch(adminUserAction.getAdminUser());
-    }, [dispatch, rowId]);
+    }, [dispatch,rowId]);
     const userList = useSelector((state) => state.adminUsers);
     const {loading, errror, adminUsers} = userList;
 
+
+    console.log(adminUsers)
     function handleEditClick(row) {
         navigate('/admin/users/' + row.id)
     }
@@ -91,7 +93,6 @@ const AdminHome = () => {
             <div>
                 <AdminHeader/>
                 <SideBar/>
-
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <button className='btn btn-info' onClick={() => navigate('/admin/users')}>New User</button>
                     <DataTable

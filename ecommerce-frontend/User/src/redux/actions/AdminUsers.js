@@ -15,14 +15,16 @@ import {
 const adminUserAction = {
     getAdminUser: () => async (dispatch) => {
         try {
+            console.log(`${axiosURL.AXIOS_HEROKU_URL}/admin/users`)
             dispatch({type: USER_GET_REQUEST});
             const data = await axios.get(
-                axiosURL.AXIOS_HEROKU_URL + "/admin/users",{
+                `${axiosURL.AXIOS_HEROKU_URL}/admin/users`,{
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem('Token').replaceAll('"','')
                     }}
 
             );
+
             dispatch({type: USER_GET_SUCCESS, payload: data.data});
         } catch (error) {
             dispatch({

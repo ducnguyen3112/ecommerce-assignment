@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.OPTIONAL;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -24,15 +25,17 @@ public class ProductServiceImplTest {
     Product product;
     Optional<Product> productOptional;
     private ProductRepository productRepository;
+    private RatingRepository ratingRepository;
     private ModelMapper modelMapper;
     private ProductServiceImpl productServiceImpl;
+
 
     @BeforeEach
     void setUp() {
         product = mock(Product.class);
         productOptional = Optional.of(product);
         productRepository = mock(ProductRepository.class);
-        RatingRepository ratingRepository = mock(RatingRepository.class);
+        ratingRepository = mock(RatingRepository.class);
         modelMapper = mock(ModelMapper.class);
         productServiceImpl = new ProductServiceImpl(productRepository, modelMapper, ratingRepository);
     }
@@ -55,11 +58,13 @@ public class ProductServiceImplTest {
 
     @Test
     public void getProduct_WhenRequestValid_Expect_ReturnProduct() {
-
+        Optional<Float> floatOptional=Optional.of(1f);
         ResponseProductDto expected = mock(ResponseProductDto.class);
         when(productRepository.findById(1L)).thenReturn(productOptional);
         when(modelMapper.map(productOptional.get(), ResponseProductDto.class)).thenReturn(expected);
+        when(ratingRepository.findAVGRatingOfProduct(expected.getId())).thenReturn(floatOptional);
         ResponseProductDto actual = productServiceImpl.getProduct(1L);
+        verify(expected).setAvgRating(1f);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -67,7 +72,7 @@ public class ProductServiceImplTest {
     public void getProduct_WhenIdNotFound_Expect_throwResourceNotFoundException() {
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> productServiceImpl.getProduct(1L));
-        assertThat(exception.getMessage()).isEqualTo("Did not find product has id = " + 1L);
+        assertThat(exception.getMessage()).isEqualTo("Did not find product with id = " + 1L);
     }
 
 

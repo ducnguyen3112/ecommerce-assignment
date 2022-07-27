@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import AdminHeader from "../../header/AdminHearder";
 import SideBar from "../../sidebar/SideBar";
 import UserService from "../../service/UserService";
+import FileUploadService from "../../service/FileUploadService";
 
 const UserDetail = () => {
     const dispatch = useDispatch();
@@ -36,15 +37,16 @@ const UserDetail = () => {
                 .then(res => {
                     console.log(res.data)
                     setOneAdminUser(res.data)
-                    console.log(res.data.roles)
                     if (res.data.roles[0].name === 'ROLE_ADMIN') {
                         document.getElementById('optionAdmin').setAttribute('selected', 'selected')
                     } else {
                         document.getElementById('optionUser').setAttribute('selected', 'selected')
                     }
-                    if (res.data.status === 'ACTIVE') {
+                    if (res.data.status === "ACTIVE") {
                         document.getElementById('optionStatusActive').setAttribute('selected', 'selected')
+                        console.log('active')
                     } else {
+                        console.log('inactive')
                         document.getElementById('optionStatusInactive').setAttribute('selected', 'selected')
 
                     }
@@ -65,7 +67,7 @@ const UserDetail = () => {
                     document.getElementById('role').value
                 ],
                 address: document.getElementById('address').value,
-                avatar: document.getElementById('firstName').value,
+                avatar: avatar,
                 status: document.getElementById('status').value
             }
             UserService.changUserInfo(dataPayload, id)
@@ -110,6 +112,16 @@ const UserDetail = () => {
 
     }
 
+    const onThumbnailChange = (e) => {
+        FileUploadService.fileUploadSetup(e)
+            .then(res => {
+                setAvatar(res.data.message);
+            })
+            .catch(error => {
+                alert(error.response.data.message);
+                console.log(error);
+            })
+    }
     return (
         <div>
             <AdminHeader/>
@@ -120,14 +132,13 @@ const UserDetail = () => {
                         <div
                             class="d-flex flex-column align-items-center text-center p-3 py-5">
                             <img class="rounded-circle mt-5" width="150px"
-                                 src={oneAdminUser.avatar}/><span
+                                 src={oneAdminUser.avatar} id="avatar"/><span
                             class="font-weight-bold mt-2">{oneAdminUser.firstName + ' ' + oneAdminUser.lastName}</span><span
                             class="text-black-50"
                             mt-2>{oneAdminUser.email}</span><span> </span>
                             <div className="text-center mt-2">
-                                <button className="btn btn-primary profile-button"
-                                        type="button">Change avatar
-                                </button>
+                                <input className="btn btn-primary profile-button" type="file" onChange={(e) => onThumbnailChange(e)}
+                                ></input>
                             </div>
 
                         </div>
